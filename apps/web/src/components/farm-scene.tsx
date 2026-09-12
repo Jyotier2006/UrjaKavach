@@ -156,6 +156,97 @@ function Shrubs(){
   </instancedMesh>;
 }
 
+/** Meteorological mast. Every wind site has one, and it gives the skyline something slender next to the rotors. */
+function MetMast(){
+  return <group position={[-13.6,.04,-8.4]}>
+    <mesh position={[0,2.6,0]} castShadow><cylinderGeometry args={[.045,.075,5.2,6]}/><meshStandardMaterial color="#cfd2c4" roughness={.6} metalness={.2}/></mesh>
+    {[1.5,3.1,4.6].map(y=><mesh key={y} position={[0,y,0]}><boxGeometry args={[.75,.03,.03]}/><meshStandardMaterial color="#b9bdb0" roughness={.6}/></mesh>)}
+    <mesh position={[0,5.3,0]}><sphereGeometry args={[.1,8,6]}/><meshStandardMaterial color="#ce703b" roughness={.5}/></mesh>
+    {[-.6,.6].map(x=><mesh key={x} position={[x,1.3,0]} rotation={[0,0,x>0?.42:-.42]}><cylinderGeometry args={[.012,.012,3,4]}/><meshStandardMaterial color="#b0b4a6"/></mesh>)}
+  </group>;
+}
+
+/** Inverter cabinets at the head of each panel row, and the gravel apron they stand on. */
+function Inverters(){
+  const spots=useMemo(()=>[[-9.4,6.1],[-4.2,7.3],[1.1,8.2],[6.3,8.9]] as const,[]);
+  return <group>{spots.map(([x,z])=><group key={`${x}:${z}`} position={[x,.04,z]}>
+    <mesh position={[0,.01,0]} receiveShadow><boxGeometry args={[1.5,.05,.9]}/><meshStandardMaterial color="#b6b39c" roughness={1}/></mesh>
+    <mesh position={[-.3,.32,0]} castShadow><boxGeometry args={[.52,.58,.44]}/><meshStandardMaterial color="#d6d8cd" roughness={.65} metalness={.15}/></mesh>
+    <mesh position={[.35,.27,0]}><boxGeometry args={[.42,.48,.4]}/><meshStandardMaterial color="#9fa79f" roughness={.6} metalness={.2}/></mesh>
+  </group>)}</group>;
+}
+
+/** Service track from the site entrance to the substation, with two parked vehicles on it. */
+function ServiceTrack(){
+  return <group>
+    <mesh position={[-13.2,.075,2.2]} receiveShadow><boxGeometry args={[4.6,.04,.9]}/><meshStandardMaterial color="#cfc7a8" roughness={1}/></mesh>
+    <group position={[-12.4,.1,2.2]}>
+      <mesh position={[0,.24,0]} castShadow><boxGeometry args={[.92,.34,.5]}/><meshStandardMaterial color="#e4e2d6" roughness={.7}/></mesh>
+      <mesh position={[-.12,.5,0]}><boxGeometry args={[.46,.24,.46]}/><meshStandardMaterial color="#cdd2cc" roughness={.5} metalness={.2}/></mesh>
+    </group>
+    <group position={[-14.6,.1,2.2]}>
+      <mesh position={[0,.2,0]} castShadow><boxGeometry args={[.78,.28,.46]}/><meshStandardMaterial color="#7f9b7d" roughness={.75}/></mesh>
+      <mesh position={[.1,.42,0]}><boxGeometry args={[.36,.2,.42]}/><meshStandardMaterial color="#cdd2cc" roughness={.5} metalness={.2}/></mesh>
+    </group>
+  </group>;
+}
+
+/** Perimeter posts. A real site is fenced, and the line of posts also makes the parcel boundary legible. */
+function Fence(){
+  const posts=useRef<THREE.InstancedMesh>(null);
+  const count=64;
+  useLayoutEffect(()=>{
+    if(!posts.current)return;
+    const o=new THREE.Object3D();
+    const halfX=15.6,halfZ=12.2;
+    let i=0;
+    for(let n=0;n<count;n++){
+      const t=n/count*4;
+      const side=Math.floor(t),f=t-side;
+      const x=side===0?-halfX+f*halfX*2:side===1?halfX:side===2?halfX-f*halfX*2:-halfX;
+      const z=side===0?-halfZ:side===1?-halfZ+f*halfZ*2:side===2?halfZ:halfZ-f*halfZ*2;
+      o.position.set(x,.34,z);
+      o.rotation.set(0,0,0);
+      o.scale.set(1,1,1);
+      o.updateMatrix();
+      posts.current.setMatrixAt(i++,o.matrix);
+    }
+    posts.current.instanceMatrix.needsUpdate=true;
+  },[]);
+  return <instancedMesh ref={posts} args={[undefined,undefined,count]}>
+    <boxGeometry args={[.09,.62,.09]}/>
+    <meshStandardMaterial color="#8b8f7d" roughness={.85}/>
+  </instancedMesh>;
+}
+
+/** Substation yard: transformers, a control cabin and a gantry. Every generating site needs somewhere for the
+ *  power to leave from, and its absence was part of why the field read as empty. */
+function Substation(){
+  return <group position={[-11.5,.04,7.4]}>
+    <mesh position={[0,.03,0]} receiveShadow><boxGeometry args={[5.2,.06,3.6]}/><meshStandardMaterial color="#b8b49a" roughness={1}/></mesh>
+    {[-1.5,0,1.5].map(x=><group key={x} position={[x,0,-.5]}>
+      <mesh position={[0,.42,0]} castShadow><boxGeometry args={[.85,.78,.9]}/><meshStandardMaterial color="#9aa3a6" roughness={.6} metalness={.25}/></mesh>
+      <mesh position={[0,.92,0]}><cylinderGeometry args={[.09,.09,.3,8]}/><meshStandardMaterial color="#7d8689" roughness={.5} metalness={.3}/></mesh>
+    </group>)}
+    <mesh position={[1.6,.38,1.2]} castShadow><boxGeometry args={[1.5,.7,1]}/><meshStandardMaterial color="#e2e0d4" roughness={.8}/></mesh>
+    <mesh position={[1.6,.76,1.2]} castShadow><boxGeometry args={[1.66,.08,1.16]}/><meshStandardMaterial color="#6f7770" roughness={.6}/></mesh>
+    {[-2,2].map(x=><mesh key={x} position={[x,.75,1.4]}><cylinderGeometry args={[.05,.05,1.45,6]}/><meshStandardMaterial color="#8d9490" roughness={.6} metalness={.3}/></mesh>)}
+    <mesh position={[0,1.45,1.4]}><boxGeometry args={[4.1,.07,.07]}/><meshStandardMaterial color="#8d9490" roughness={.6} metalness={.3}/></mesh>
+  </group>;
+}
+
+/** A few taller trees among the low planting, so the vegetation has a silhouette instead of one repeated blob. */
+function Trees(){
+  const spots=useMemo(()=>[[-13.4,-9.2],[-4.6,-10.4],[6.2,-10.1],[13.8,-7.6],[-14.2,3.4],[14.6,4.8],[-6.8,10.6],[9.4,10.2]] as const,[]);
+  return <group>{spots.map(([x,z],i)=><group key={`${x}:${z}`} position={[x,.04,z]}>
+    <mesh position={[0,.42,0]} castShadow><cylinderGeometry args={[.07,.1,.85,6]}/><meshStandardMaterial color="#7a6a53" roughness={1}/></mesh>
+    <mesh position={[0,1.25,0]} castShadow scale={[1,1.35+((i*7)%5)*.09,1]}>
+      <icosahedronGeometry args={[.62,0]}/>
+      <meshStandardMaterial color={i%2?'#5f7a52':'#6b8459'} roughness={1} flatShading/>
+    </mesh>
+  </group>)}</group>;
+}
+
 function Terrain(){
   // Field parcels in slightly different greens, so the site looks farmed rather than printed on one flat sheet.
   const parcels=useMemo(()=>[
@@ -173,6 +264,12 @@ function Terrain(){
     {[-6,2,6].map(z=><mesh key={z} position={[0,.05,z]} receiveShadow><boxGeometry args={[31,.045,.65]}/><meshStandardMaterial color="#ddd5b2" roughness={.95}/></mesh>)}
     {[-10,-1,10].map(x=><mesh key={x} position={[x,.07,1]} receiveShadow><boxGeometry args={[.55,.04,23]}/><meshStandardMaterial color="#ddd5b2" roughness={.95}/></mesh>)}
     <Shrubs/>
+    <Trees/>
+    <Fence/>
+    <Substation/>
+    <MetMast/>
+    <Inverters/>
+    <ServiceTrack/>
     <group position={[3,.2,4.1]}>
       <mesh position={[0,.45,0]} castShadow receiveShadow><boxGeometry args={[2.2,.9,1.2]}/><meshStandardMaterial color="#e6e6dc" roughness={.75}/></mesh>
       <mesh position={[0,.94,0]} castShadow><boxGeometry args={[2.4,.12,1.4]}/><meshStandardMaterial color="#6f7770" roughness={.6}/></mesh>
