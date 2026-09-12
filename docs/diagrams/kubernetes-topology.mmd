@@ -1,0 +1,18 @@
+flowchart TB
+    CLIENT["Browser"] --> INGRESS["NGINX Ingress · configured host"]
+    subgraph cluster["Kubernetes · Kustomize dev / prod overlay"]
+        INGRESS -->|"/"| WEBSVC["Web Service"]
+        INGRESS -->|"/api · prefix rewritten"| APISVC["API Service"]
+        WEBSVC --> WEBPODS["Web Deployment · NGINX · static export"]
+        APISVC --> APIPODS["API Deployment · FastAPI · Python domains"]
+        CONFIG["ConfigMap · Secret reference"] --> APIPODS
+        HPA["API HPA · CPU target"] --> APIPODS
+        PDB["API disruption budget"] -.-> APIPODS
+    end
+    APIPODS --> PG[("Reachable PostgreSQL · provisioned separately")]
+    REGISTRY["Docker images · image registry"] --> WEBPODS
+    REGISTRY --> APIPODS
+    classDef workload fill:#EDF3F6,stroke:#527581,color:#183C35
+    classDef control fill:#EDF2E4,stroke:#205641,color:#183C35
+    class WEBPODS,APIPODS,PG workload
+    class INGRESS,CONFIG,HPA,PDB,REGISTRY control

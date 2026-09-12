@@ -1,0 +1,8 @@
+stateDiagram-v2
+    [*] --> Assigned
+    Assigned --> InProgress: Accept job
+    InProgress --> AwaitingReview: Complete checklist
+    AwaitingReview --> InProgress: Request more work
+    AwaitingReview --> Completed: Finish review
+    state "In progress" as InProgress
+    state "Awaiting review" as AwaitingReview

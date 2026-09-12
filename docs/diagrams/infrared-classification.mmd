@@ -1,0 +1,16 @@
+flowchart TB
+    INPUT["Single-module thermal crop · PNG / JPEG / WebP"] --> CHECK["Decode · size and colour checks"]
+    CHECK --> READY{"Model available?"}
+    READY -->|"Yes"| PREP["Grayscale · resize to 24 × 40 · normalize"]
+    PREP --> CNN["IRNet · convolution blocks 32 → 64 → 128"]
+    CNN --> HEAD["Global average pooling · dropout · 12-class head"]
+    HEAD --> PROBS["Class probabilities · uncertainty message"]
+    CNN --> CAM["Final convolution activations + class gradients"]
+    CAM --> HEAT["Grad-CAM heatmap"]
+    PROBS --> REVIEW["Technician review · inspection record"]
+    HEAT --> REVIEW
+    READY -->|"No"| MANUAL["Labelled image-quality screening · manual review"]
+    classDef model fill:#EDF3F6,stroke:#527581,color:#183C35
+    classDef field fill:#EDF2E4,stroke:#205641,color:#183C35
+    class PREP,CNN,HEAD,CAM model
+    class INPUT,CHECK,PROBS,HEAT,REVIEW,MANUAL field

@@ -1,0 +1,18 @@
+flowchart TB
+    EVENT["One independent CARE event"] --> FEATURES["Avg signals · operating conditions · angle sin/cos · trailing means"]
+    FEATURES --> FIT["Normal training rows · chronological fit partition"]
+    FEATURES --> CAL["Calibration partition · residual spread"]
+    FIT --> MODEL["LightGBM model per component temperature"]
+    MODEL --> CAL
+    MODEL --> EXPECTED["Expected temperature across the event"]
+    EXPECTED --> RESIDUAL["Measured minus expected · normalized residual"]
+    CAL --> RESIDUAL
+    RESIDUAL --> TREND["Running-hour median trend · one-sided flags"]
+    TREND --> COUNTER["Persistent criticality counter"]
+    COUNTER --> SWEEP["Threshold sweep · event detection · warning time"]
+    LABELS["CARE event metadata"] --> SWEEP
+    SWEEP --> REPORT["Per-farm JSON · Performance page"]
+    classDef process fill:#EDF2E4,stroke:#205641,color:#183C35
+    classDef result fill:#FFF4E4,stroke:#B37A3C,color:#183C35
+    class EVENT,FEATURES,FIT,CAL,MODEL,EXPECTED,RESIDUAL,TREND,COUNTER process
+    class SWEEP,LABELS,REPORT result

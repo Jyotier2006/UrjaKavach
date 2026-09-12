@@ -1,0 +1,27 @@
+flowchart TB
+    subgraph browser["Browser experience"]
+        UI["Next.js · React · TypeScript"]
+        VIS["R3F site twin · ECharts · technician UI"]
+        CACHE["Service worker · local demo state"]
+        UI --> VIS
+        UI <--> CACHE
+    end
+    ART["Versioned JSON artifacts · model metrics"] --> UI
+    UI <-->|"REST actions · WebSocket alerts"| API["FastAPI · Pydantic"]
+    subgraph python["Python services"]
+        API --> OPT["CP-SAT scheduler · loss estimates"]
+        API --> IR["IRNet inference · Grad-CAM"]
+        API <--> DB[("SQLAlchemy records · PostgreSQL / SQLite")]
+        API --> ALERT["Alert lifecycle · optional Slack delivery"]
+    end
+    REPLAY["Python replay publisher"] --> BROKER["MQTT broker · separately configured"]
+    BROKER --> INGEST["Python subscriber"]
+    INGEST -->|"Scenario ID + replay step"| API
+    BATCH["Synthetic generator · CARE and IR evaluation"] --> ART
+    WEATHER["Open-Meteo · planning only"] --> API
+    classDef surface fill:#EDF2E4,stroke:#205641,color:#183C35
+    classDef compute fill:#EDF3F6,stroke:#527581,color:#183C35
+    classDef evidence fill:#FFF4E4,stroke:#B37A3C,color:#183C35
+    class UI,VIS,CACHE surface
+    class API,OPT,IR,INGEST,BATCH compute
+    class ART,DB evidence
