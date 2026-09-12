@@ -1,0 +1,166 @@
+{
+  "source": "Raptor Maps Infrared Solar Modules (MIT). All images are from the held-out test split, never seen in training.",
+  "split": "stratified 70/15/15, seed 0, identical to scripts/train_ir_classifier.py",
+  "confident": [
+    {
+      "file": "confident/Cell__pred-Cell__conf-0.98.jpg",
+      "true": "Cell",
+      "pred": "Cell",
+      "confidence": 0.9832779765129089
+    },
+    {
+      "file": "confident/Cell-Multi__pred-Cell-Multi__conf-0.99.jpg",
+      "true": "Cell-Multi",
+      "pred": "Cell-Multi",
+      "confidence": 0.9870282411575317
+    },
+    {
+      "file": "confident/Cracking__pred-Cracking__conf-0.99.jpg",
+      "true": "Cracking",
+      "pred": "Cracking",
+      "confidence": 0.9939633011817932
+    },
+    {
+      "file": "confident/Diode__pred-Diode__conf-0.98.jpg",
+      "true": "Diode",
+      "pred": "Diode",
+      "confidence": 0.9778575897216797
+    },
+    {
+      "file": "confident/Diode-Multi__pred-Diode-Multi__conf-1.00.jpg",
+      "true": "Diode-Multi",
+      "pred": "Diode-Multi",
+      "confidence": 0.9997768998146057
+    },
+    {
+      "file": "confident/Hot-Spot__pred-Hot-Spot__conf-0.99.jpg",
+      "true": "Hot-Spot",
+      "pred": "Hot-Spot",
+      "confidence": 0.9915674328804016
+    },
+    {
+      "file": "confident/Hot-Spot-Multi__pred-Hot-Spot-Multi__conf-0.99.jpg",
+      "true": "Hot-Spot-Multi",
+      "pred": "Hot-Spot-Multi",
+      "confidence": 0.993813157081604
+    },
+    {
+      "file": "confident/No-Anomaly__pred-No-Anomaly__conf-0.70.jpg",
+      "true": "No-Anomaly",
+      "pred": "No-Anomaly",
+      "confidence": 0.6980194449424744
+    },
+    {
+      "file": "confident/Offline-Module__pred-Offline-Module__conf-0.99.jpg",
+      "true": "Offline-Module",
+      "pred": "Offline-Module",
+      "confidence": 0.9923607707023621
+    },
+    {
+      "file": "confident/Shadowing__pred-Shadowing__conf-1.00.jpg",
+      "true": "Shadowing",
+      "pred": "Shadowing",
+      "confidence": 0.9966132044792175
+    },
+    {
+      "file": "confident/Soiling__pred-Soiling__conf-0.93.jpg",
+      "true": "Soiling",
+      "pred": "Soiling",
+      "confidence": 0.9288905262947083
+    },
+    {
+      "file": "confident/Vegetation__pred-Vegetation__conf-0.99.jpg",
+      "true": "Vegetation",
+      "pred": "Vegetation",
+      "confidence": 0.9939707517623901
+    }
+  ],
+  "hard": [
+    {
+      "file": "hard/Cell__pred-Cell__conf-0.20.jpg",
+      "true": "Cell",
+      "pred": "Cell",
+      "confidence": 0.201381117105484
+    },
+    {
+      "file": "hard/Cell-Multi__pred-Cell-Multi__conf-0.23.jpg",
+      "true": "Cell-Multi",
+      "pred": "Cell-Multi",
+      "confidence": 0.22910477221012115
+    },
+    {
+      "file": "hard/Cracking__pred-Cracking__conf-0.21.jpg",
+      "true": "Cracking",
+      "pred": "Cracking",
+      "confidence": 0.21267329156398773
+    },
+    {
+      "file": "hard/Diode__pred-Diode__conf-0.27.jpg",
+      "true": "Diode",
+      "pred": "Diode",
+      "confidence": 0.2653183937072754
+    },
+    {
+      "file": "hard/Diode-Multi__pred-Diode-Multi__conf-0.44.jpg",
+      "true": "Diode-Multi",
+      "pred": "Diode-Multi",
+      "confidence": 0.4394453465938568
+    },
+    {
+      "file": "hard/Hot-Spot__pred-Hot-Spot__conf-0.22.jpg",
+      "true": "Hot-Spot",
+      "pred": "Hot-Spot",
+      "confidence": 0.22477169334888458
+    },
+    {
+      "file": "hard/Hot-Spot-Multi__pred-Hot-Spot-Multi__conf-0.39.jpg",
+      "true": "Hot-Spot-Multi",
+      "pred": "Hot-Spot-Multi",
+      "confidence": 0.38846030831336975
+    },
+    {
+      "file": "hard/No-Anomaly__pred-No-Anomaly__conf-0.18.jpg",
+      "true": "No-Anomaly",
+      "pred": "No-Anomaly",
+      "confidence": 0.18264606595039368
+    },
+    {
+      "file": "hard/Offline-Module__pred-Offline-Module__conf-0.22.jpg",
+      "true": "Offline-Module",
+      "pred": "Offline-Module",
+      "confidence": 0.21996301412582397
+    },
+    {
+      "file": "hard/Shadowing__pred-Shadowing__conf-0.27.jpg",
+      "true": "Shadowing",
+      "pred": "Shadowing",
+      "confidence": 0.2664770185947418
+    },
+    {
+      "file": "hard/Soiling__pred-Soiling__conf-0.38.jpg",
+      "true": "Soiling",
+      "pred": "Soiling",
+      "confidence": 0.3754264712333679
+    },
+    {
+      "file": "hard/Vegetation__pred-Vegetation__conf-0.23.jpg",
+      "true": "Vegetation",
+      "pred": "Vegetation",
+      "confidence": 0.23139509558677673
+    }
+  ],
+  "per_class_test_accuracy": {
+    "Cell": 0.644,
+    "Cell-Multi": 0.472,
+    "Cracking": 0.617,
+    "Diode": 0.96,
+    "Diode-Multi": 0.962,
+    "Hot-Spot": 0.595,
+    "Hot-Spot-Multi": 0.583,
+    "No-Anomaly": 0.831,
+    "Offline-Module": 0.734,
+    "Shadowing": 0.627,
+    "Soiling": 0.467,
+    "Vegetation": 0.653
+  }
+}
