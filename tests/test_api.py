@@ -69,7 +69,8 @@ def test_image_screening_with_weights_reports_class_and_grad_cam(client):
     response = client.post('/solar/ir/classify', files={'file': ('module.png', _flat_module_png(), 'image/png')})
     assert response.status_code == 200
     result = response.json()
-    assert result['label'] in ir_classifier.CLASSES
+    # A flat grey square is not a real module, so the model may legitimately be unsure and say so.
+    assert result['label'].removesuffix(' (low confidence)') in ir_classifier.CLASSES
     assert 0 <= result['confidence'] <= 1
     assert abs(sum(result['probabilities'].values()) - 1) < 1e-2
     assert result['heatmap_kind'].startswith('Grad-CAM')

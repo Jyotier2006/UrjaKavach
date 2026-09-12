@@ -105,3 +105,21 @@ touches uvicorn's protocol layer. `websockets` is now pinned in requirements.loc
 The browser's CORS default was widened to include port 3001. Next.js moves to the next free port when 3000 is
 taken, and the resulting failure is a CORS error in the console rather than anything the UI can explain, which
 reads to a user as "the button is broken". Deployments should still set CORS_ORIGINS explicitly.
+
+## D018 — The classifier refuses input it was not built for
+A twelve-class softmax has no "none of these" option, so an unrelated image is not merely mis-scored: the model
+is forced to name a fault. Uploading a colour photograph of a window returned No-Anomaly, and the interface
+presented it exactly like a real reading. Nothing in the response revealed that the input was never solar at all.
+
+Every image in the Raptor Maps collection is true single-channel thermal data. Measured across 400 of them the
+mean per-pixel spread between RGB channels is 0.00, while an ordinary colour photograph measures in the
+hundreds, so a limit of 10 separates them with an enormous margin and still tolerates JPEG chroma noise. Input
+above it is refused before the model runs, with no class, no confidence and no explanation map, because a
+Grad-CAM over an image that was never classified would be theatre.
+
+Predictions below 0.30 confidence are additionally marked low confidence and name their top three candidates.
+Chance is 8.3 percent across twelve classes, and a 24 percent answer is closer to guessing than to knowing;
+reporting the shape of the doubt is more useful to a technician than a single dressed-up label.
+
+This is a narrow guard, not out-of-distribution detection. A grayscale photograph of something that is not a
+solar module will still pass it and be classified.

@@ -14,6 +14,14 @@ import warnings
 import numpy as np
 from PIL import Image, UnidentifiedImageError
 
+# Every image in the Raptor Maps collection is true single-channel thermal data: measured over 400 of them, the
+# mean per-pixel spread between RGB channels is exactly 0.00. An ordinary colour photograph measures in the
+# hundreds. Ten is therefore a wide margin that still tolerates JPEG chroma noise.
+COLOUR_LIMIT = 10.0
+# Twelve classes put chance at 8.3 percent. Below this the softmax is not meaningfully above guessing, so the
+# response reports the shape of the doubt instead of dressing a coin flip up as a class.
+LOW_CONFIDENCE = 0.30
+
 _model = None
 
 
@@ -36,7 +44,7 @@ def _classifier():
     return _model
 
 
-def _decode(raw: bytes) -> tuple[np.ndarray, int, int]:
+def _decode(raw: bytes) -> tuple[np.ndarray, int, int, float]:
     if len(raw) > 5 * 1024 * 1024:
         raise ValueError('Image must be smaller than 5 MB')
     try:
@@ -48,9 +56,13 @@ def _decode(raw: bytes) -> tuple[np.ndarray, int, int]:
                 if original.width * original.height > 16_000_000:
                     raise ValueError('Image exceeds the 16 megapixel limit')
                 width, height = original.size
+                colour = original.convert('RGB')
+                colour.thumbnail((240, 400))
+                channels = np.asarray(colour, dtype=np.float32)
+                spread = float(np.mean(channels.max(axis=2) - channels.min(axis=2)))
                 grey = original.convert('L')
                 grey.thumbnail((240, 400))
-                return np.asarray(grey, dtype=float), width, height
+                return np.asarray(grey, dtype=float), width, height, spread
     except (UnidentifiedImageError, OSError, Image.DecompressionBombError, Image.DecompressionBombWarning) as exc:
         raise ValueError('Could not decode a supported image') from exc
 
@@ -93,9 +105,22 @@ def _grad_cam(model, tensor, target: int, shape: tuple[int, int]) -> str:
 
 
 def screen_image(raw: bytes) -> dict:
-    pixels, width, height = _decode(raw)
+    pixels, width, height, colourfulness = _decode(raw)
     spread = float(np.percentile(pixels, 95) - np.percentile(pixels, 5))
     model = _classifier()
+
+    # A colour photograph is not thermal data. The classifier has no "not a module" class and would otherwise be
+    # forced to name one of twelve, so refuse here rather than return a fabricated class for unrelated input.
+    if colourfulness > COLOUR_LIMIT:
+        return {
+            'label': 'Not an infrared module crop',
+            'confidence': None, 'probabilities': None,
+            'action': 'This looks like a colour photograph rather than single-channel thermal data. Upload an infrared crop of one module, as produced by a thermal camera. The classifier is not run on unrelated images.',
+            'provenance': 'User-submitted image · rejected before classification',
+            'method': f'Input check: mean RGB channel spread {colourfulness:.1f}, above the {COLOUR_LIMIT:.0f} limit for thermal data',
+            'heatmap': None, 'heatmap_kind': None,
+            'width': width, 'height': height, 'contrast_p95_p05': round(spread, 2), 'stored': False,
+        }
 
     if model is None:
         return {
@@ -115,12 +140,22 @@ def screen_image(raw: bytes) -> dict:
     tensor = torch.from_numpy(ir_classifier.normalise(crop))[None, None]
     prediction = model.predict(crop)
     macro_f1 = (model.metrics.get('test') or {}).get('macro_f1')
+    runners = sorted(prediction.probabilities.items(), key=lambda kv: -kv[1])[:3]
+    uncertain = prediction.confidence < LOW_CONFIDENCE
+    if uncertain:
+        action = ('The model is close to guessing on this image: ' +
+                  ', '.join(f'{name} {share:.0%}' for name, share in runners) +
+                  '. Treat it as unclassified and rely on your own observation.')
+    elif prediction.label == 'No-Anomaly':
+        action = 'No anomaly predicted. Keep the image with the inspection record.'
+    else:
+        action = f'Predicted {prediction.label}. Confirm against the original thermal image with a qualified technician before acting.'
     return {
-        'label': prediction.label,
+        'label': f'{prediction.label} (low confidence)' if uncertain else prediction.label,
         'confidence': round(prediction.confidence, 4),
         'probabilities': prediction.probabilities,
-        'action': ('No anomaly predicted. Keep the image with the inspection record.' if prediction.label == 'No-Anomaly'
-                   else f'Predicted {prediction.label}. Confirm against the original thermal image with a qualified technician before acting.'),
+        'uncertain': uncertain,
+        'action': action,
         'provenance': 'User-submitted image · IRNet CNN trained on Raptor Maps Infrared Solar Modules',
         'method': f'12-class CNN classification (held-out test macro-F1 {macro_f1})' if macro_f1 else '12-class CNN classification',
         'heatmap': _grad_cam(model, tensor, list(model.classes).index(prediction.label), crop.shape),

@@ -46,17 +46,60 @@ def test_screening_with_a_model_reports_class_confidence_and_grad_cam(monkeypatc
         model = IRNet().eval()
 
         def predict(self, image):
-            probs = np.full(len(CLASSES), 1 / len(CLASSES))
+            # Confidently one class, so this exercises the normal path rather than the low-confidence one.
+            probs = np.full(len(CLASSES), 0.02)
+            probs[3] = 1 - 0.02 * (len(CLASSES) - 1)
             return type("P", (), {"label": CLASSES[3], "confidence": float(probs[3]),
                                   "probabilities": {c: float(p) for c, p in zip(CLASSES, probs)}})()
 
     monkeypatch.setattr(inspection, "_classifier", lambda: Stub())
     result = inspection.screen_image(_png(width=120, height=200))
     assert result["label"] == CLASSES[3]
-    assert result["confidence"] == pytest.approx(1 / len(CLASSES), abs=1e-4)  # the API rounds to 4 dp
+    assert result["uncertain"] is False
+    assert result["confidence"] == pytest.approx(0.78, abs=1e-2)
     assert result["heatmap_kind"].startswith("Grad-CAM")
     assert result["heatmap"].startswith("data:image/png;base64,")
     assert "0.5" in result["method"]
+
+
+def test_a_colour_photograph_is_refused_before_the_classifier_runs():
+    """The model has no 'not a module' class, so unrelated input must be rejected rather than forced into one."""
+    rng = np.random.default_rng(3)
+    photo = np.stack([rng.integers(20, 240, (120, 160)), rng.integers(0, 180, (120, 160)),
+                      rng.integers(60, 255, (120, 160))], axis=2).astype(np.uint8)
+    out = BytesIO(); Image.fromarray(photo, mode="RGB").save(out, format="PNG")
+
+    result = inspection.screen_image(out.getvalue())
+
+    assert result["label"] == "Not an infrared module crop"
+    assert result["confidence"] is None and result["probabilities"] is None
+    assert result["heatmap"] is None  # no Grad-CAM for something never classified
+    assert "colour photograph" in result["action"]
+
+
+def test_a_real_grayscale_crop_passes_the_input_check(monkeypatch):
+    """The guard must not reject genuine thermal data: real crops measure 0.0 channel spread."""
+    monkeypatch.setattr(inspection, "_classifier", lambda: None)
+    result = inspection.screen_image(_png())
+    assert result["label"] != "Not an infrared module crop"
+
+
+def test_a_near_chance_prediction_is_labelled_low_confidence(monkeypatch):
+    class Unsure:
+        classes = CLASSES
+        metrics = {"test": {"macro_f1": 0.5}}
+        model = IRNet().eval()
+
+        def predict(self, image):
+            probs = np.full(len(CLASSES), 1 / len(CLASSES))
+            return type("P", (), {"label": CLASSES[0], "confidence": 0.12,
+                                  "probabilities": {c: float(p) for c, p in zip(CLASSES, probs)}})()
+
+    monkeypatch.setattr(inspection, "_classifier", lambda: Unsure())
+    result = inspection.screen_image(_png())
+    assert result["uncertain"] is True
+    assert "low confidence" in result["label"]
+    assert "close to guessing" in result["action"]
 
 
 def test_oversized_and_undecodable_uploads_are_rejected():
