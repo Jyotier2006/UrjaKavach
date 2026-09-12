@@ -119,11 +119,12 @@ Use `NEXT_PUBLIC_API_URL=http://127.0.0.1:8000` in `apps/web/.env.local` for loc
 ## Verification actually completed
 
 - Production Next.js build passes; all routes exported. Typecheck and lint clean.
-- Python domain/API/ML suite: **30 passed**.
+- Python domain/API/ML suite: **35 passed**.
 - Browser verification **passes**: 3 Playwright journey tests covering the full detect → investigate → plan → technician → evidence path, phone layout and offline navigation. All five issues recorded at handoff are fixed; see `docs/HANDOFF.md`.
 - The 384 bundled CP-SAT planning cases were actually computed. Timing artifacts are in `artifacts/demo_bundle/manifest.json`; they are local generation times, not deployed request latency.
 - **M2 is measured on real CARE To Compare v6 data**: at one threshold across all three wind farms, 14 of 37 anomaly events detected, 4 of 50 healthy events raising a false alarm, 26.3-day median warning on the strongest farm. Results are on the Performance page and in `artifacts/metrics/care_m2_wind_farm_{a,b,c}.json`. This is our own normal-behavior evaluation against real CARE labels, **not** a published CARE benchmark score; the benchmark's own quantities remain uncomputed.
-- No trained CNN, SHAP explanation, M1/M3 model or verified savings exists. Solar and infrared datasets are still not downloaded.
+- **Infrared classifier measured on the Raptor Maps set**: held-out macro-F1 0.608, and 96% of faulty modules flagged for a human at 85% precision. Rare classes are weak and are reported as such. Weights are committed; the technician view returns class probabilities and real Grad-CAM.
+- No SHAP explanation, M1/M3 model or verified savings exists. The solar telemetry dataset is still not downloaded.
 
 Commands to continue verification:
 
@@ -142,7 +143,7 @@ The Playwright config starts its own local static server using the bundled `serv
 
 **CARE To Compare v6 has been downloaded, MD5-verified and extracted** to `data/raw/CARE_To_Compare/` (~19 GB, gitignored, not redistributed with this source). The solar telemetry and IR image datasets are still not downloaded. Direct sources, checksums and a downloader are in `docs/DATASETS.md` and `scripts/download_datasets.py`.
 
-All current operational series, risk indices, gallery images and planned jobs are simulated. The expectation model is a Ridge prototype trained on generated data; it is not the specified LightGBM M2. M1 and M3 are unavailable. IR upload currently performs image-quality screening, not a trained defect classification, confidence estimate or Grad-CAM.
+All current operational series, risk indices, gallery images and planned jobs are simulated. M2 is a LightGBM normal-behavior model measured on real CARE data, and the infrared classifier is a CNN measured on the Raptor Maps set; both report held-out results on the Performance page. M1 and M3 are unavailable.
 
 CARE-derived data, if you later publish it, must retain the dataset's CC BY-SA 4.0 attribution and sharing terms. Keep raw datasets and large model files out of Git.
 

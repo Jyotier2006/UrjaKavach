@@ -38,15 +38,17 @@ what was done and what genuinely remains.
   reports `"database":"postgresql"`, and every route is served through nginx. Both Kubernetes overlays render
   and pass client-side validation. See `docs/DEPLOYMENT.md` for what is and is not verified.
 
+- Infrared classifier trained on the Raptor Maps set (D016): held-out macro-F1 0.608, anomaly recall 96.1
+  percent. Live API check classified one real crop per class with genuine Grad-CAM. Weights committed.
+
 ## Missing capabilities/evidence
 
 - M1 (EnergyFaultDetector autoencoder), M3 and the M1/M2 fusion are untrained, and nothing is SHAP-explained.
   M2 is the only real model.
 - The official CARE benchmark quantities (CARE score, coverage, accuracy, reliability, earliness) have not
   been computed. The Performance page reports our own measured results and leaves that table empty.
-- Solar and infrared archives are still not downloaded. Solar analytics use generated series and infrared
-  upload performs image-quality screening only.
-- No trained infrared CNN, Grad-CAM, model card or Hugging Face publication.
+- The solar telemetry archive is still not downloaded; solar analytics use generated series.
+- No model card or Hugging Face publication for the infrared classifier.
 - SQLite demo record storage exists, not the normalized TimescaleDB schema and migrations from the brief.
 - MQTT and webhook integration code is unverified against external infrastructure. No Slack message was sent.
 - No production authentication, durable job queue or cross-device offline synchronization.
@@ -57,5 +59,6 @@ what was done and what genuinely remains.
 ## Suggested completion order
 
 Train M1 and the fusion, since M2 alone detects 14 of 37 anomaly events and the remaining gains are unlikely
-to come from tuning it further. Then acquire the solar and infrared datasets so those screens stop running on
-generated series. Deployment remains the user's to perform.
+to come from tuning it further. Then acquire the solar telemetry dataset so that screen stops running on
+generated series. The infrared classifier's rare classes would benefit most from more Soiling and Hot-Spot
+examples. Deployment remains the user's to perform.

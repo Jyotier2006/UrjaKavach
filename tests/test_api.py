@@ -1,4 +1,5 @@
 import io
+import pytest
 from PIL import Image
 
 
@@ -41,9 +42,16 @@ def test_api_optimizer_persists_and_validates(client):
     assert client.post('/loss/estimate', json={'assumptions': {'capacity_factor': 2}}).status_code == 422
 
 
-def test_image_is_screened_without_claiming_classification(client):
+def _flat_module_png() -> bytes:
     output = io.BytesIO(); Image.new('L', (24, 40), 128).save(output, format='PNG')
-    response = client.post('/solar/ir/classify', files={'file': ('module.png', output.getvalue(), 'image/png')})
+    return output.getvalue()
+
+
+def test_image_screening_without_weights_never_claims_classification(client, monkeypatch):
+    """D007: with no classifier loaded the endpoint reports image quality only."""
+    from services.api.app.domain import inspection
+    monkeypatch.setattr(inspection, '_classifier', lambda: None)
+    response = client.post('/solar/ir/classify', files={'file': ('module.png', _flat_module_png(), 'image/png')})
     assert response.status_code == 200
     result = response.json()
     assert result['confidence'] is None and result['probabilities'] is None
@@ -51,6 +59,21 @@ def test_image_is_screened_without_claiming_classification(client):
     assert result['label'] == 'Low image contrast'
     assert result['heatmap_kind'] == 'Pixel intensity map, not Grad-CAM'
     assert client.post('/solar/ir/classify', files={'file': ('bad.png', b'not an image', 'image/png')}).status_code == 422
+
+
+def test_image_screening_with_weights_reports_class_and_grad_cam(client):
+    """D016: with the committed weights present the endpoint classifies and explains."""
+    from services.ml import ir_classifier
+    if not ir_classifier.available():
+        pytest.skip('trained weights not present')
+    response = client.post('/solar/ir/classify', files={'file': ('module.png', _flat_module_png(), 'image/png')})
+    assert response.status_code == 200
+    result = response.json()
+    assert result['label'] in ir_classifier.CLASSES
+    assert 0 <= result['confidence'] <= 1
+    assert abs(sum(result['probabilities'].values()) - 1) < 1e-2
+    assert result['heatmap_kind'].startswith('Grad-CAM')
+    assert 'CNN' in result['method'] and result['stored'] is False
 
 
 def test_stream_warning_ack_and_deduplication(client):

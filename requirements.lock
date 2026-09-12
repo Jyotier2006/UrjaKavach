@@ -1,3 +1,6 @@
+# The PyTorch CPU index is consulted in addition to PyPI so Linux resolves the small CPU wheel for torch
+# rather than the multi-gigabyte CUDA build. Local version labels (+cpu) satisfy the plain == pin.
+--extra-index-url https://download.pytorch.org/whl/cpu
 absl-py==2.5.0
 alembic==1.19.2
 annotated-doc==0.0.5
@@ -42,6 +45,7 @@ six==1.17.0
 SQLAlchemy==2.0.52
 starlette==1.6.0
 threadpoolctl==3.6.0
+torch==2.14.0
 typing-inspection==0.4.4
 typing_extensions==4.16.0
 urllib3==2.7.0

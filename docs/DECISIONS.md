@@ -74,3 +74,23 @@ At that point, criticality 432: 14 of 37 anomaly events detected, 4 of 50 health
 and a 26.3-day median warning on the strongest farm. Per farm it is 0 of 4 on A, 5 of 6 on B and 9 of 27 on C.
 The spread between B and C is wide, so the aggregate is the number to quote and the farm B figure must never be
 presented on its own.
+
+## D016 — The infrared classifier is a real CNN, judged on macro-F1
+Supersedes the "weights absent" half of D007. IRNet, a small convolutional network, is trained from scratch on
+the Raptor Maps Infrared Solar Modules set: 20,000 real 24x40 thermal crops in twelve classes, MIT licensed.
+It is committed at `artifacts/models/ir_classifier.pt` (1.17 MB) under the weights rule in CONTRIBUTING.md.
+
+The collection is severely imbalanced. Half of it is No-Anomaly and Diode-Multi has 175 images, so accuracy is
+a misleading headline: predicting No-Anomaly for everything already scores 50 percent. Training uses
+class-balanced loss, the split is stratified 70/15/15, the model is selected on validation macro-F1, and the
+test split is scored exactly once.
+
+Held-out test: macro-F1 0.608, accuracy 75.2 percent. Operationally the first question is whether a module
+needs a person to look at it, and on that binary the model flags 96.1 percent of faulty modules at 85 percent
+precision. The weak spots are the rare and visually similar classes: Soiling (30 test images, F1 0.30),
+Hot-Spot-Multi (0.32) and Hot-Spot (0.39). Diode faults are near-perfect (0.96). These are in line with
+published from-scratch results on this benchmark and are reported as measured, not rounded up.
+
+The heatmap the technician sees is now genuine Grad-CAM over the final convolutional block. Without weights, or
+with torch absent, the endpoint degrades to the original contrast check and says so in every field of the
+response. A prediction remains a prompt to look, never a diagnosis.

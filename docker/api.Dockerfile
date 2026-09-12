@@ -21,6 +21,7 @@ WORKDIR /app
 COPY services/ ./services/
 COPY artifacts/demo_bundle/ ./artifacts/demo_bundle/
 COPY artifacts/openapi.json ./artifacts/openapi.json
+COPY artifacts/models/ ./artifacts/models/
 
 # db.py writes the SQLite fallback here when DATABASE_URL is unset.
 RUN mkdir -p /app/.state && chown -R urja:urja /app

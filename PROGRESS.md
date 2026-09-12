@@ -29,8 +29,15 @@ Complete website with all product screens and working demo interactions, Python 
 - CI workflow covering Python tests, typecheck/lint/build, the browser journey, both image builds and manifest validation.
 - Fixed along the way: `scripts/build_offline.py` failed on a fresh clone because `artifacts/metrics/` did not exist, and `/health` hardcoded `care_evaluated: false`, which had gone stale.
 
+## Infrared classifier (2026-09-12)
+- Raptor Maps Infrared Solar Modules downloaded (15 MB, 20,000 crops, 12 classes, MIT). IRNet CNN trained from scratch with class-balanced loss on a stratified 70/15/15 split (D016).
+- Held-out test: macro-F1 0.608, accuracy 75.2%, anomaly-vs-normal recall 96.1% at 85% precision. Rare classes (Soiling, Hot-Spot, Hot-Spot-Multi) are the weak point and are reported as such.
+- Screening endpoint now returns class probabilities and genuine Grad-CAM when weights are present, and degrades to the labelled contrast check otherwise. Technician and Performance pages read the real state instead of hardcoding "not available".
+- Weights (1.17 MB) committed under the amended rule in CONTRIBUTING.md; torch pinned to the CPU build so venv, Docker and CI resolve the same wheel.
+- Python suite: 35 passed.
+
 ## Outstanding evidence
-- M1 (EnergyFaultDetector autoencoder), M3 and the M1/M2 fusion are still untrained; SHAP explanations are still absent. Only M2 exists as a real model.
+- M1 (EnergyFaultDetector autoencoder), M3 and the M1/M2 fusion are still untrained; SHAP explanations are still absent. M2 and the infrared CNN are the real models.
 - The fleet, solar and planner screens still run on the synthetic demo bundle and remain labelled Simulated. The measured CARE results appear only on the Performance page, and are kept visibly separate from that simulated fleet.
 - Reported CARE numbers come from our own normal-behavior approach on real CARE labels. They are not a published CARE benchmark score and must never be presented as one.
 - Docker runtime and deployed cloud infrastructure are unavailable in the current runtime; no cloud deployment will be claimed.

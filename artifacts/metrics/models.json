@@ -62,8 +62,14 @@
     ]
   },
   "ir": {
-    "macro_f1": null,
-    "status": "Trained classifier weights are not bundled"
+    "macro_f1": 0.6075,
+    "accuracy": 0.7519,
+    "anomaly_recall": 0.961,
+    "anomaly_precision": 0.85,
+    "test_images": 2995,
+    "dataset": "Raptor Maps Infrared Solar Modules (20,000 crops, 12 classes, MIT)",
+    "protocol": "stratified 70/15/15 split, seed 0; model selected on validation macro-F1; test split scored once",
+    "status": "Measured on the held-out test split; weights committed at artifacts/models/ir_classifier.pt"
   },
   "solar": {
     "status": "Awaiting real telemetry and injection validation"

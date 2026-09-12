@@ -1,0 +1,93 @@
+{
+  "model": "IRNet, small CNN trained from scratch",
+  "data": "Raptor Maps Infrared Solar Modules (20,000 crops, 12 classes, MIT)",
+  "protocol": "stratified 70/15/15 split, seed 0; model selected on validation macro-F1; test split scored once",
+  "caveat": "Half the collection is No-Anomaly, so accuracy is inflated by the majority class. Macro-F1 is the headline.",
+  "images": 20000,
+  "train": 14010,
+  "validation": 2995,
+  "test": {
+    "accuracy": 0.7519,
+    "macro_f1": 0.6075,
+    "per_class": {
+      "Cell": {
+        "support": 281,
+        "precision": 0.656,
+        "recall": 0.644,
+        "f1": 0.65
+      },
+      "Cell-Multi": {
+        "support": 193,
+        "precision": 0.467,
+        "recall": 0.472,
+        "f1": 0.469
+      },
+      "Cracking": {
+        "support": 141,
+        "precision": 0.685,
+        "recall": 0.617,
+        "f1": 0.649
+      },
+      "Diode": {
+        "support": 224,
+        "precision": 0.951,
+        "recall": 0.96,
+        "f1": 0.956
+      },
+      "Diode-Multi": {
+        "support": 26,
+        "precision": 0.714,
+        "recall": 0.962,
+        "f1": 0.82
+      },
+      "Hot-Spot": {
+        "support": 37,
+        "precision": 0.293,
+        "recall": 0.595,
+        "f1": 0.393
+      },
+      "Hot-Spot-Multi": {
+        "support": 36,
+        "precision": 0.216,
+        "recall": 0.583,
+        "f1": 0.316
+      },
+      "No-Anomaly": {
+        "support": 1500,
+        "precision": 0.955,
+        "recall": 0.831,
+        "f1": 0.888
+      },
+      "Offline-Module": {
+        "support": 124,
+        "precision": 0.514,
+        "recall": 0.734,
+        "f1": 0.605
+      },
+      "Shadowing": {
+        "support": 158,
+        "precision": 0.55,
+        "recall": 0.627,
+        "f1": 0.586
+      },
+      "Soiling": {
+        "support": 30,
+        "precision": 0.215,
+        "recall": 0.467,
+        "f1": 0.295
+      },
+      "Vegetation": {
+        "support": 245,
+        "precision": 0.675,
+        "recall": 0.653,
+        "f1": 0.664
+      }
+    },
+    "anomaly_vs_normal": {
+      "precision": 0.85,
+      "recall": 0.961
+    }
+  },
+  "validation_macro_f1": 0.6077,
+  "training_seconds": 1022.0
+}

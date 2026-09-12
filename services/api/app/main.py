@@ -172,7 +172,12 @@ def health():
     # Reported from the artifact that is actually present, so the flag cannot drift away from the truth.
     # data_mode stays 'simulated': the operational series this API serves are generated, and the CARE
     # evaluation is a separate measurement on real turbines rather than a live feed.
-    return {'status': 'ok', 'version': '1.0.0', 'data_mode': 'simulated', 'database': db.engine.dialect.name, 'trained_ir_model': False, 'care_evaluated': (ARTIFACTS / 'care-evaluation.json').exists()}
+    try:
+        from services.ml import ir_classifier
+        trained_ir = ir_classifier.available()
+    except ImportError:  # torch not installed: screening degrades to the contrast check
+        trained_ir = False
+    return {'status': 'ok', 'version': '1.0.0', 'data_mode': 'simulated', 'database': db.engine.dialect.name, 'trained_ir_model': trained_ir, 'care_evaluated': (ARTIFACTS / 'care-evaluation.json').exists()}
 
 
 @app.get('/sites')

@@ -11,7 +11,9 @@ __pycache__/
 !.env.example
 data/raw/
 data/processed/
-models/
+# Only a top-level scratch models/ dir. artifacts/models/ holds the small committed weights
+# permitted by CONTRIBUTING.md and stays tracked.
+/models/
 *.keras
 *.h5
 *.joblib

@@ -29,5 +29,9 @@ These are the rules that keep the product honest. They are not optional.
   docs/DECISIONS.md.
 - Keep API and artifact contracts backward compatible. Offline behaviour must survive API failures.
 - Browser QA covers replay, investigation, repair scheduling, technician completion and evidence.
-- Commit small logical units. Never commit secrets, raw datasets, virtual environments or model weights.
+- Commit small logical units. Never commit secrets, raw datasets or virtual environments.
+- Trained weights are committed only when they are small (under a few MB), reproducible from a committed
+  training script against a documented public dataset, and needed for the app to function. Anything larger
+  belongs in a release asset or a model registry, not in git. `artifacts/models/ir_classifier.pt` qualifies;
+  a CARE autoencoder or anything trained on private data would not.
 - Local demo state uses browser storage. It is not authentication and is not suitable for shared production.
