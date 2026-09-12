@@ -81,7 +81,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: infra/docker/api.Dockerfile
+          file: docker/api.Dockerfile
           push: false
           tags: urjakavach-api:ci
           cache-from: type=gha
@@ -90,7 +90,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: infra/docker/web.Dockerfile
+          file: docker/web.Dockerfile
           push: false
           tags: urjakavach-web:ci
           cache-from: type=gha
@@ -105,6 +105,6 @@ jobs:
         run: |
           for overlay in dev prod; do
             echo "::group::$overlay"
-            kubectl kustomize "infra/k8s/overlays/$overlay" | kubectl apply --dry-run=client -f -
+            kubectl kustomize "k8s/overlays/$overlay" | kubectl apply --dry-run=client -f -
             echo "::endgroup::"
           done

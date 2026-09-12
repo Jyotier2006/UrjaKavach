@@ -1,5 +1,5 @@
 # UrjaKavach Python API: loss estimation, CP-SAT scheduling, work orders, image screening, alert replay.
-# Build from the repository root:  docker build -f infra/docker/api.Dockerfile -t urjakavach-api .
+# Build from the repository root:  docker build -f docker/api.Dockerfile -t urjakavach-api .
 #
 # Every pinned dependency publishes a manylinux wheel for CPython 3.12, and psycopg2-binary bundles libpq, so
 # the image needs no compiler and no apt packages at all. `--only-binary=:all:` makes that contract explicit:

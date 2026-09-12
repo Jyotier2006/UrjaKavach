@@ -36,7 +36,7 @@ what was done and what genuinely remains.
   Windows, and the port is overridable with `E2E_PORT`.
 - Container images build and the full Compose stack runs: web, API and PostgreSQL all report healthy, the API
   reports `"database":"postgresql"`, and every route is served through nginx. Both Kubernetes overlays render
-  and pass client-side validation. See `infra/README.md` for what is and is not verified.
+  and pass client-side validation. See `docs/DEPLOYMENT.md` for what is and is not verified.
 
 ## Missing capabilities/evidence
 

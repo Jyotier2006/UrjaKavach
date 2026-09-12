@@ -41,17 +41,17 @@ logs: ## Follow stack logs
 	$(COMPOSE) logs -f
 
 images: ## Build both container images
-	docker build -f infra/docker/api.Dockerfile -t urjakavach-api:latest .
-	docker build -f infra/docker/web.Dockerfile -t urjakavach-web:latest .
+	docker build -f docker/api.Dockerfile -t urjakavach-api:latest .
+	docker build -f docker/web.Dockerfile -t urjakavach-web:latest .
 
 k8s-validate: ## Render and validate both Kubernetes overlays
 	@for overlay in dev prod; do \
 		echo "== $$overlay =="; \
-		kubectl kustomize infra/k8s/overlays/$$overlay | kubectl apply --dry-run=client -f - ; \
+		kubectl kustomize k8s/overlays/$$overlay | kubectl apply --dry-run=client -f - ; \
 	done
 
 k8s-dev: ## Apply the dev overlay to the current kube context
-	kubectl apply -k infra/k8s/overlays/dev
+	kubectl apply -k k8s/overlays/dev
 
 care-train: ## Train and evaluate M2 on one CARE farm, e.g. make care-train FARM=B
 	$(PY) scripts/train_care_nbm.py $(or $(FARM),B)

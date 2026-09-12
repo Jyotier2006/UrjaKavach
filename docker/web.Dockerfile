@@ -1,5 +1,5 @@
 # UrjaKavach web: Next.js static export served by nginx.
-# Build from the repository root:  docker build -f infra/docker/web.Dockerfile -t urjakavach-web .
+# Build from the repository root:  docker build -f docker/web.Dockerfile -t urjakavach-web .
 #
 # NEXT_PUBLIC_API_URL is read at build time, not at run time, because the output is a static export with no
 # server to read the environment. Pointing the image at a different backend means rebuilding it.
@@ -24,7 +24,7 @@ RUN npm run build --workspace=@urjakavach/web
 
 FROM nginx:1.27-alpine AS runtime
 RUN apk add --no-cache curl
-COPY infra/docker/nginx.conf /etc/nginx/conf.d/default.conf
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /src/apps/web/out /usr/share/nginx/html
 EXPOSE 8080
 

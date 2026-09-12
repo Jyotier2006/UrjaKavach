@@ -22,7 +22,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: infra/docker/api.Dockerfile
+      dockerfile: docker/api.Dockerfile
     environment:
       DATABASE_URL: postgresql+psycopg2://urjakavach:urjakavach@db:5432/urjakavach
       CORS_ORIGINS: http://localhost:8080
@@ -38,7 +38,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: infra/docker/web.Dockerfile
+      dockerfile: docker/web.Dockerfile
       args:
         NEXT_PUBLIC_API_URL: http://localhost:8000
     ports:

@@ -24,9 +24,10 @@ urjakavach/
 │   ├── optimizer/         OR-Tools CP-SAT repair scheduler and comparison baselines
 │   ├── simulator/         MQTT replay publisher and ingestion consumer
 │   └── alerts/            escalation and webhook delivery
-├── infra/               Containers and Kubernetes
-│   ├── docker/            API and web images, nginx config
-│   └── k8s/               base manifests plus dev and prod overlays
+├── docker/              API and web images, nginx config
+├── k8s/                 Kubernetes
+│   ├── base/              deployments, services, config, ingress, HPA, PodDisruptionBudget
+│   └── overlays/          dev (single replica) and prod (pinned tags)
 ├── scripts/             dataset download, demo generation, CARE training, offline build, OpenAPI export
 ├── artifacts/           precomputed demo bundle, measured metrics, OpenAPI contract
 ├── docs/                design, decisions, dataset provenance, traceability, handoff state
