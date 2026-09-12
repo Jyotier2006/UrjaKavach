@@ -123,3 +123,18 @@ reporting the shape of the doubt is more useful to a technician than a single dr
 
 This is a narrow guard, not out-of-distribution detection. A grayscale photograph of something that is not a
 solar module will still pass it and be classified.
+
+## D019 — Demo sets are filtered by confidence, never by correctness
+Selecting demonstration images because the model got them right makes the demonstration meaningless, and the
+first reviewer who asks how the images were chosen gets an answer that undoes every honest figure elsewhere in
+this project. It is not permitted.
+
+Filtering by the model's own confidence is a different thing and is allowed, because confidence is available
+at inference time without the label. It is a deployment policy rather than a selection bias: a real operation
+would auto-triage the certain calls and route the rest to a person.
+
+Measured on the held-out test split, accuracy rises with confidence: 75.2 percent over all 2,995 images, 86.6
+percent above 0.70 confidence covering 24 percent of them, 91.9 percent above 0.80 covering 18 percent, and
+93.3 percent above 0.90 covering 9 percent. `scripts/sample_ir_images.py --min-confidence` exports on that
+basis and keeps the confident mistakes in the set, which is what makes the number honest: a 40-image draw at
+0.80 scored 37 correct and retained three confident errors.

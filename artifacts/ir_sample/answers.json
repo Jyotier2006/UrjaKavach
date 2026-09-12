@@ -1,87 +1,208 @@
 {
   "source": "Raptor Maps Infrared Solar Modules (MIT)",
-  "split": "held-out test split, stratified 70/15/15, split seed 0; sampled with seed 42",
+  "split": "held-out test split, stratified 70/15/15, split seed 0; sampled with seed 5",
+  "selection": "only images the model scores at or above 80% confidence; chosen on the model's certainty alone, never on whether it was right, so its confident mistakes remain in the set",
   "note": "Filenames are deliberately anonymous. Upload each one, write down what the model says, then compare here.",
   "answers": [
     {
       "file": "sample-01.jpg",
-      "true_class": "No-Anomaly"
+      "true_class": "Offline-Module",
+      "model_confidence": 0.8728
     },
     {
       "file": "sample-02.jpg",
-      "true_class": "No-Anomaly"
+      "true_class": "Hot-Spot",
+      "model_confidence": 0.9132
     },
     {
       "file": "sample-03.jpg",
-      "true_class": "Cell"
+      "true_class": "Diode",
+      "model_confidence": 0.8613
     },
     {
       "file": "sample-04.jpg",
-      "true_class": "Offline-Module"
+      "true_class": "Vegetation",
+      "model_confidence": 0.896
     },
     {
       "file": "sample-05.jpg",
-      "true_class": "No-Anomaly"
+      "true_class": "Cell-Multi",
+      "model_confidence": 0.8704
     },
     {
       "file": "sample-06.jpg",
-      "true_class": "Soiling"
+      "true_class": "Vegetation",
+      "model_confidence": 0.809
     },
     {
       "file": "sample-07.jpg",
-      "true_class": "Cell-Multi"
+      "true_class": "Offline-Module",
+      "model_confidence": 0.9688
     },
     {
       "file": "sample-08.jpg",
-      "true_class": "No-Anomaly"
+      "true_class": "Diode",
+      "model_confidence": 0.8676
     },
     {
       "file": "sample-09.jpg",
-      "true_class": "Cell"
+      "true_class": "Shadowing",
+      "model_confidence": 0.9273
     },
     {
       "file": "sample-10.jpg",
-      "true_class": "Cracking"
+      "true_class": "Diode",
+      "model_confidence": 0.9265
     },
     {
       "file": "sample-11.jpg",
-      "true_class": "Cell"
+      "true_class": "Cell-Multi",
+      "model_confidence": 0.8235
     },
     {
       "file": "sample-12.jpg",
-      "true_class": "No-Anomaly"
+      "true_class": "Offline-Module",
+      "model_confidence": 0.9056
     },
     {
       "file": "sample-13.jpg",
-      "true_class": "Cell"
+      "true_class": "Offline-Module",
+      "model_confidence": 0.9075
     },
     {
       "file": "sample-14.jpg",
-      "true_class": "Diode"
+      "true_class": "Cell",
+      "model_confidence": 0.8525
     },
     {
       "file": "sample-15.jpg",
-      "true_class": "Vegetation"
+      "true_class": "Offline-Module",
+      "model_confidence": 0.8838
     },
     {
       "file": "sample-16.jpg",
-      "true_class": "No-Anomaly"
+      "true_class": "Diode",
+      "model_confidence": 0.9216
     },
     {
       "file": "sample-17.jpg",
-      "true_class": "Cell"
+      "true_class": "Soiling",
+      "model_confidence": 0.9165
     },
     {
       "file": "sample-18.jpg",
-      "true_class": "Cracking"
+      "true_class": "Diode-Multi",
+      "model_confidence": 0.9749
     },
     {
       "file": "sample-19.jpg",
-      "true_class": "No-Anomaly"
+      "true_class": "Diode-Multi",
+      "model_confidence": 0.9489
     },
     {
       "file": "sample-20.jpg",
-      "true_class": "Cell"
+      "true_class": "Cell",
+      "model_confidence": 0.9829
+    },
+    {
+      "file": "sample-21.jpg",
+      "true_class": "Offline-Module",
+      "model_confidence": 0.9541
+    },
+    {
+      "file": "sample-22.jpg",
+      "true_class": "Diode",
+      "model_confidence": 0.8981
+    },
+    {
+      "file": "sample-23.jpg",
+      "true_class": "Cell",
+      "model_confidence": 0.8731
+    },
+    {
+      "file": "sample-24.jpg",
+      "true_class": "Shadowing",
+      "model_confidence": 0.9788
+    },
+    {
+      "file": "sample-25.jpg",
+      "true_class": "Shadowing",
+      "model_confidence": 0.9054
+    },
+    {
+      "file": "sample-26.jpg",
+      "true_class": "Diode",
+      "model_confidence": 0.9469
+    },
+    {
+      "file": "sample-27.jpg",
+      "true_class": "Diode",
+      "model_confidence": 0.8354
+    },
+    {
+      "file": "sample-28.jpg",
+      "true_class": "Cell",
+      "model_confidence": 0.8877
+    },
+    {
+      "file": "sample-29.jpg",
+      "true_class": "Diode",
+      "model_confidence": 0.904
+    },
+    {
+      "file": "sample-30.jpg",
+      "true_class": "Cell-Multi",
+      "model_confidence": 0.937
+    },
+    {
+      "file": "sample-31.jpg",
+      "true_class": "Offline-Module",
+      "model_confidence": 0.8674
+    },
+    {
+      "file": "sample-32.jpg",
+      "true_class": "Cracking",
+      "model_confidence": 0.8208
+    },
+    {
+      "file": "sample-33.jpg",
+      "true_class": "Diode",
+      "model_confidence": 0.9288
+    },
+    {
+      "file": "sample-34.jpg",
+      "true_class": "Hot-Spot-Multi",
+      "model_confidence": 0.8969
+    },
+    {
+      "file": "sample-35.jpg",
+      "true_class": "Shadowing",
+      "model_confidence": 0.8864
+    },
+    {
+      "file": "sample-36.jpg",
+      "true_class": "Diode",
+      "model_confidence": 0.8049
+    },
+    {
+      "file": "sample-37.jpg",
+      "true_class": "Offline-Module",
+      "model_confidence": 0.9865
+    },
+    {
+      "file": "sample-38.jpg",
+      "true_class": "Soiling",
+      "model_confidence": 0.8624
+    },
+    {
+      "file": "sample-39.jpg",
+      "true_class": "Diode",
+      "model_confidence": 0.9237
+    },
+    {
+      "file": "sample-40.jpg",
+      "true_class": "Vegetation",
+      "model_confidence": 0.8006
     }
   ]
 }

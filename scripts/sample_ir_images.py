@@ -29,13 +29,17 @@ def main():
     parser.add_argument("--count", type=int, default=24, help="how many images to export")
     parser.add_argument("--classes", nargs="*", choices=CLASSES, help="restrict to these classes")
     parser.add_argument("--seed", type=int, default=1, help="changes which images are drawn, not the split")
+    parser.add_argument("--min-confidence", type=float, default=None, metavar="P",
+                        help="keep only images the model scores at or above P confidence. This is a deployment "
+                             "policy, not cherry-picking: it uses the model's own certainty, never the true label, "
+                             "so images it is confidently wrong about are still included.")
     args = parser.parse_args()
 
     if not DATA_ROOT.exists():
         raise SystemExit("Dataset missing. Run: python scripts/download_datasets.py ir")
 
     records = load_metadata()
-    _, y = load_images(records)
+    x, y = load_images(records)
     # The split seed is fixed so "held out" keeps its meaning; --seed only chooses within that split.
     _, _, test_idx = stratified_split(y, np.random.default_rng(SEED))
 
@@ -43,6 +47,20 @@ def main():
     pool = [i for i in test_idx if records[i][1] in wanted]
     if not pool:
         raise SystemExit("No test images match those classes.")
+
+    confidences: dict[int, float] = {}
+    if args.min_confidence is not None:
+        from services.ml.ir_classifier import IRClassifier
+        model = IRClassifier()
+        kept = []
+        for i in pool:
+            prediction = model.predict(x[i, 0])
+            if prediction.confidence >= args.min_confidence:
+                kept.append(i)
+                confidences[i] = prediction.confidence
+        if not kept:
+            raise SystemExit(f"No test images reach {args.min_confidence:.0%} confidence.")
+        pool = kept
 
     rng = np.random.default_rng(args.seed)
     picked = rng.choice(pool, size=min(args.count, len(pool)), replace=False)
@@ -54,11 +72,16 @@ def main():
         source, true_label = records[i]
         name = f"sample-{n:02d}.jpg"  # no class in the filename: this is a blind test
         shutil.copy(source, OUT / name)
-        answers.append({"file": name, "true_class": true_label})
+        entry = {"file": name, "true_class": true_label}
+        if i in confidences: entry["model_confidence"] = round(confidences[i], 4)
+        answers.append(entry)
 
     (OUT / "answers.json").write_text(json.dumps(
         {"source": "Raptor Maps Infrared Solar Modules (MIT)",
          "split": f"held-out test split, stratified 70/15/15, split seed {SEED}; sampled with seed {args.seed}",
+         "selection": (f"only images the model scores at or above {args.min_confidence:.0%} confidence; chosen on the "
+                       "model's certainty alone, never on whether it was right, so its confident mistakes remain in the set"
+                       if args.min_confidence is not None else "uniform random draw from the held-out test split"),
          "note": "Filenames are deliberately anonymous. Upload each one, write down what the model says, then compare here.",
          "answers": answers}, indent=2))
 
