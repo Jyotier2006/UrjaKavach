@@ -1,0 +1,17 @@
+version: 1
+source: Synthetic demonstration feature names; replace with verified CARE descriptions on ingestion
+features:
+  gearbox_temperature: {subsystem: gearbox, unit: C, provenance: Simulated}
+  bearing_temperature: {subsystem: main_bearing, unit: C, provenance: Simulated}
+  generator_temperature: {subsystem: generator, unit: C, provenance: Simulated}
+  phase_current: {subsystem: grid, unit: A, provenance: Simulated}
+  vibration: {subsystem: main_bearing, unit: mm/s, provenance: Simulated, exclude_from_metrics: true}
+  wind_speed: {subsystem: environment, unit: m/s, provenance: Simulated}
+  ambient_temperature: {subsystem: environment, unit: C, provenance: Simulated}
+  power: {subsystem: generator, unit: kW, provenance: Simulated}
+care_search_required:
+  - vibration
+  - acceleration
+  - accelerometer
+  - current
+  - phase

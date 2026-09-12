@@ -1,0 +1,914 @@
+{
+  "summary": {
+    "farm": "B",
+    "model": "M2 - LightGBM temperature normal-behavior models",
+    "data": "real CARE To Compare v6",
+    "caveat": "Own normal-behavior approach evaluated on real CARE labels; not a published CARE benchmark score.",
+    "targets_per_event": 25,
+    "baseline_flag_rate": 0.01,
+    "smoothing_window_rows": 72,
+    "common_mode_rejection": true,
+    "threshold_selection": "z cut-off calibrated per event on held-out normal training rows; no event labels used",
+    "events_evaluated": 15,
+    "events_not_assessable": 0,
+    "not_assessable_reason": "turbine not in normal operation during the prediction window, so no early-detection signal exists to measure",
+    "events_not_assessable_anomaly": 0,
+    "events_errored": 0,
+    "anomaly_events": 6,
+    "normal_events": 9,
+    "criticality_sweep": {
+      "12": {
+        "detected": 6,
+        "detection_rate": 1.0,
+        "detected_before_event_start": 0,
+        "warning_days_before_event_end_median": 32.66,
+        "false_alarms": 7,
+        "false_alarm_rate": 0.778
+      },
+      "24": {
+        "detected": 6,
+        "detection_rate": 1.0,
+        "detected_before_event_start": 0,
+        "warning_days_before_event_end_median": 29.9,
+        "false_alarms": 7,
+        "false_alarm_rate": 0.778
+      },
+      "48": {
+        "detected": 6,
+        "detection_rate": 1.0,
+        "detected_before_event_start": 0,
+        "warning_days_before_event_end_median": 29.7,
+        "false_alarms": 7,
+        "false_alarm_rate": 0.778
+      },
+      "72": {
+        "detected": 6,
+        "detection_rate": 1.0,
+        "detected_before_event_start": 0,
+        "warning_days_before_event_end_median": 25.98,
+        "false_alarms": 7,
+        "false_alarm_rate": 0.778
+      },
+      "144": {
+        "detected": 6,
+        "detection_rate": 1.0,
+        "detected_before_event_start": 0,
+        "warning_days_before_event_end_median": 23.27,
+        "false_alarms": 3,
+        "false_alarm_rate": 0.333
+      },
+      "288": {
+        "detected": 6,
+        "detection_rate": 1.0,
+        "detected_before_event_start": 0,
+        "warning_days_before_event_end_median": 10.09,
+        "false_alarms": 2,
+        "false_alarm_rate": 0.222
+      },
+      "432": {
+        "detected": 5,
+        "detection_rate": 0.833,
+        "detected_before_event_start": 0,
+        "warning_days_before_event_end_median": 11.85,
+        "false_alarms": 2,
+        "false_alarm_rate": 0.222
+      },
+      "576": {
+        "detected": 4,
+        "detection_rate": 0.667,
+        "detected_before_event_start": 0,
+        "warning_days_before_event_end_median": 5.79,
+        "false_alarms": 1,
+        "false_alarm_rate": 0.111
+      },
+      "864": {
+        "detected": 3,
+        "detection_rate": 0.5,
+        "detected_before_event_start": 0,
+        "warning_days_before_event_end_median": 3.19,
+        "false_alarms": 0,
+        "false_alarm_rate": 0.0
+      },
+      "1152": {
+        "detected": 2,
+        "detection_rate": 0.333,
+        "detected_before_event_start": 0,
+        "warning_days_before_event_end_median": 11.79,
+        "false_alarms": 0,
+        "false_alarm_rate": 0.0
+      }
+    },
+    "runtime_seconds": 403.8
+  },
+  "events": [
+    {
+      "farm": "B",
+      "event_id": 2,
+      "asset": 13,
+      "label": "normal",
+      "description": null,
+      "rows": 54774,
+      "observable_prediction_rows": 2160,
+      "fit_rows": 35908,
+      "calibration_rows": 8977,
+      "targets_modelled": 25,
+      "targets_skipped": 0,
+      "z_threshold": 2.69,
+      "peak_z_in_prediction": 3.48,
+      "hottest_target": "sensor_32_avg",
+      "peak_criticality_in_prediction": 94,
+      "event_start": "2023-08-09T19:20:00",
+      "event_end": "2023-08-23T04:20:00",
+      "alarms": {
+        "12": {
+          "alarm_time": "2023-08-11T00:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 12.15
+        },
+        "24": {
+          "alarm_time": "2023-08-11T03:20:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 12.04
+        },
+        "48": {
+          "alarm_time": "2023-08-11T07:20:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 11.88
+        },
+        "72": {
+          "alarm_time": "2023-08-15T04:10:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 8.01
+        },
+        "144": null,
+        "288": null,
+        "432": null,
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "B",
+      "event_id": 7,
+      "asset": 13,
+      "label": "anomaly",
+      "description": "high temperature in transformer cell",
+      "rows": 57888,
+      "observable_prediction_rows": 4911,
+      "fit_rows": 39388,
+      "calibration_rows": 9848,
+      "targets_modelled": 25,
+      "targets_skipped": 0,
+      "z_threshold": 2.07,
+      "peak_z_in_prediction": 6.82,
+      "hottest_target": "sensor_47_avg",
+      "peak_criticality_in_prediction": 698,
+      "event_start": "2023-07-01T00:00:00",
+      "event_end": "2023-08-01T00:00:00",
+      "alarms": {
+        "12": {
+          "alarm_time": "2023-07-07T10:30:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 24.56
+        },
+        "24": {
+          "alarm_time": "2023-07-20T10:10:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 11.58
+        },
+        "48": {
+          "alarm_time": "2023-07-20T14:10:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 11.41
+        },
+        "72": {
+          "alarm_time": "2023-07-20T18:10:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 11.24
+        },
+        "144": {
+          "alarm_time": "2023-07-22T16:40:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 9.31
+        },
+        "288": {
+          "alarm_time": "2023-08-01T12:00:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": -0.5
+        },
+        "432": {
+          "alarm_time": "2023-08-03T07:30:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": -2.31
+        },
+        "576": {
+          "alarm_time": "2023-08-04T07:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": -3.33
+        },
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "B",
+      "event_id": 19,
+      "asset": 11,
+      "label": "anomaly",
+      "description": "high temperature in transformer cell",
+      "rows": 56274,
+      "observable_prediction_rows": 3696,
+      "fit_rows": 38360,
+      "calibration_rows": 9591,
+      "targets_modelled": 25,
+      "targets_skipped": 0,
+      "z_threshold": 2.82,
+      "peak_z_in_prediction": 4.7,
+      "hottest_target": "sensor_47_avg",
+      "peak_criticality_in_prediction": 1033,
+      "event_start": "2023-02-03T00:00:00",
+      "event_end": "2023-02-23T00:00:00",
+      "alarms": {
+        "12": {
+          "alarm_time": "2023-02-03T18:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 19.22
+        },
+        "24": {
+          "alarm_time": "2023-02-03T20:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 19.13
+        },
+        "48": {
+          "alarm_time": "2023-02-04T00:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 18.97
+        },
+        "72": {
+          "alarm_time": "2023-02-04T04:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 18.8
+        },
+        "144": {
+          "alarm_time": "2023-02-09T03:20:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 13.86
+        },
+        "288": {
+          "alarm_time": "2023-02-10T03:30:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 12.85
+        },
+        "432": {
+          "alarm_time": "2023-02-11T03:30:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 11.85
+        },
+        "576": {
+          "alarm_time": "2023-02-12T03:30:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 10.85
+        },
+        "864": {
+          "alarm_time": "2023-02-19T19:20:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 3.19
+        },
+        "1152": null
+      }
+    },
+    {
+      "farm": "B",
+      "event_id": 21,
+      "asset": 0,
+      "label": "normal",
+      "description": null,
+      "rows": 53514,
+      "observable_prediction_rows": 1269,
+      "fit_rows": 38397,
+      "calibration_rows": 9600,
+      "targets_modelled": 25,
+      "targets_skipped": 0,
+      "z_threshold": 3.12,
+      "peak_z_in_prediction": 2.3,
+      "hottest_target": "sensor_36_avg",
+      "peak_criticality_in_prediction": 0,
+      "event_start": "2023-09-22T20:10:00",
+      "event_end": "2023-10-01T20:10:00",
+      "alarms": {
+        "12": null,
+        "24": null,
+        "48": null,
+        "72": null,
+        "144": null,
+        "288": null,
+        "432": null,
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "B",
+      "event_id": 23,
+      "asset": 6,
+      "label": "normal",
+      "description": null,
+      "rows": 54542,
+      "observable_prediction_rows": 1743,
+      "fit_rows": 37317,
+      "calibration_rows": 9330,
+      "targets_modelled": 25,
+      "targets_skipped": 0,
+      "z_threshold": 2.92,
+      "peak_z_in_prediction": 3.36,
+      "hottest_target": "sensor_31_avg",
+      "peak_criticality_in_prediction": 141,
+      "event_start": "2023-09-17T17:30:00",
+      "event_end": "2023-09-27T11:50:00",
+      "alarms": {
+        "12": {
+          "alarm_time": "2023-09-19T17:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 7.75
+        },
+        "24": {
+          "alarm_time": "2023-09-19T19:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 7.67
+        },
+        "48": {
+          "alarm_time": "2023-09-19T23:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 7.5
+        },
+        "72": {
+          "alarm_time": "2023-09-20T03:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 7.33
+        },
+        "144": null,
+        "288": null,
+        "432": null,
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "B",
+      "event_id": 27,
+      "asset": 7,
+      "label": "anomaly",
+      "description": "Turbine is stopped due to a main bearing damage",
+      "rows": 62268,
+      "observable_prediction_rows": 8692,
+      "fit_rows": 38393,
+      "calibration_rows": 9599,
+      "targets_modelled": 25,
+      "targets_skipped": 0,
+      "z_threshold": 3.48,
+      "peak_z_in_prediction": 6.1,
+      "hottest_target": "sensor_51_avg",
+      "peak_criticality_in_prediction": 491,
+      "event_start": "2023-09-01T00:00:00",
+      "event_end": "2023-11-01T00:00:00",
+      "alarms": {
+        "12": {
+          "alarm_time": "2023-09-16T12:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 45.47
+        },
+        "24": {
+          "alarm_time": "2023-09-16T14:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 45.38
+        },
+        "48": {
+          "alarm_time": "2023-09-16T18:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 45.22
+        },
+        "72": {
+          "alarm_time": "2023-09-21T11:30:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 40.52
+        },
+        "144": {
+          "alarm_time": "2023-09-23T08:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 38.63
+        },
+        "288": {
+          "alarm_time": "2023-09-26T11:40:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 35.51
+        },
+        "432": {
+          "alarm_time": "2023-09-27T11:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 34.51
+        },
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "B",
+      "event_id": 34,
+      "asset": 14,
+      "label": "anomaly",
+      "description": "high temperature in transformer cell",
+      "rows": 56564,
+      "observable_prediction_rows": 3889,
+      "fit_rows": 35176,
+      "calibration_rows": 8795,
+      "targets_modelled": 25,
+      "targets_skipped": 0,
+      "z_threshold": 3.06,
+      "peak_z_in_prediction": 6.74,
+      "hottest_target": "sensor_47_avg",
+      "peak_criticality_in_prediction": 1522,
+      "event_start": "2023-08-24T00:00:00",
+      "event_end": "2023-09-15T00:00:00",
+      "alarms": {
+        "12": {
+          "alarm_time": "2023-09-05T11:00:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 9.54
+        },
+        "24": {
+          "alarm_time": "2023-09-05T13:00:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 9.46
+        },
+        "48": {
+          "alarm_time": "2023-09-05T17:00:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 9.29
+        },
+        "72": {
+          "alarm_time": "2023-09-05T21:00:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 9.12
+        },
+        "144": {
+          "alarm_time": "2023-09-06T09:00:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 8.62
+        },
+        "288": {
+          "alarm_time": "2023-09-07T16:00:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 7.33
+        },
+        "432": {
+          "alarm_time": "2023-09-13T06:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 1.72
+        },
+        "576": {
+          "alarm_time": "2023-09-14T06:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 0.72
+        },
+        "864": {
+          "alarm_time": "2023-09-16T06:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": -1.28
+        },
+        "1152": {
+          "alarm_time": "2023-09-18T10:00:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": -3.42
+        }
+      }
+    },
+    {
+      "farm": "B",
+      "event_id": 52,
+      "asset": 14,
+      "label": "normal",
+      "description": null,
+      "rows": 55268,
+      "observable_prediction_rows": 2730,
+      "fit_rows": 35195,
+      "calibration_rows": 8799,
+      "targets_modelled": 25,
+      "targets_skipped": 0,
+      "z_threshold": 2.81,
+      "peak_z_in_prediction": 3.27,
+      "hottest_target": "sensor_22_avg",
+      "peak_criticality_in_prediction": 73,
+      "event_start": "2023-07-14T00:00:00",
+      "event_end": "2023-07-28T00:00:00",
+      "alarms": {
+        "12": {
+          "alarm_time": "2023-07-20T18:40:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 7.22
+        },
+        "24": {
+          "alarm_time": "2023-07-20T20:40:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 7.14
+        },
+        "48": {
+          "alarm_time": "2023-07-21T00:40:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 6.97
+        },
+        "72": {
+          "alarm_time": "2023-07-21T04:40:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 6.81
+        },
+        "144": null,
+        "288": null,
+        "432": null,
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "B",
+      "event_id": 53,
+      "asset": 6,
+      "label": "anomaly",
+      "description": "Rotor Bearing 2 - Damage",
+      "rows": 58607,
+      "observable_prediction_rows": 5711,
+      "fit_rows": 38279,
+      "calibration_rows": 9570,
+      "targets_modelled": 25,
+      "targets_skipped": 0,
+      "z_threshold": 2.64,
+      "peak_z_in_prediction": 5.46,
+      "hottest_target": "sensor_47_avg",
+      "peak_criticality_in_prediction": 1840,
+      "event_start": "2023-12-26T16:40:00",
+      "event_end": "2024-02-06T16:30:00",
+      "alarms": {
+        "12": {
+          "alarm_time": "2023-12-27T22:30:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 40.75
+        },
+        "24": {
+          "alarm_time": "2023-12-28T00:30:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 40.67
+        },
+        "48": {
+          "alarm_time": "2023-12-28T06:10:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 40.43
+        },
+        "72": {
+          "alarm_time": "2023-12-30T01:30:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 38.62
+        },
+        "144": {
+          "alarm_time": "2024-01-03T08:20:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 34.34
+        },
+        "288": {
+          "alarm_time": "2024-01-04T08:20:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 33.34
+        },
+        "432": {
+          "alarm_time": "2024-01-05T08:20:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 32.34
+        },
+        "576": {
+          "alarm_time": "2024-01-06T16:40:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 30.99
+        },
+        "864": {
+          "alarm_time": "2024-01-08T16:40:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 28.99
+        },
+        "1152": {
+          "alarm_time": "2024-01-10T16:40:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 26.99
+        }
+      }
+    },
+    {
+      "farm": "B",
+      "event_id": 74,
+      "asset": 11,
+      "label": "normal",
+      "description": null,
+      "rows": 55602,
+      "observable_prediction_rows": 3019,
+      "fit_rows": 38275,
+      "calibration_rows": 9569,
+      "targets_modelled": 25,
+      "targets_skipped": 0,
+      "z_threshold": 2.74,
+      "peak_z_in_prediction": 3.65,
+      "hottest_target": "sensor_47_avg",
+      "peak_criticality_in_prediction": 207,
+      "event_start": "2023-01-03T23:00:00",
+      "event_end": "2023-01-17T07:00:00",
+      "alarms": {
+        "12": {
+          "alarm_time": "2023-01-05T10:40:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 11.85
+        },
+        "24": {
+          "alarm_time": "2023-01-05T12:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 11.76
+        },
+        "48": {
+          "alarm_time": "2023-01-05T16:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 11.59
+        },
+        "72": {
+          "alarm_time": "2023-01-11T18:10:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 5.53
+        },
+        "144": {
+          "alarm_time": "2023-01-16T18:20:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 0.53
+        },
+        "288": null,
+        "432": null,
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "B",
+      "event_id": 77,
+      "asset": 12,
+      "label": "anomaly",
+      "description": "Turbine is in standstill since 01.08 due to rotorbearing damage.",
+      "rows": 61776,
+      "observable_prediction_rows": 8223,
+      "fit_rows": 39144,
+      "calibration_rows": 9787,
+      "targets_modelled": 25,
+      "targets_skipped": 0,
+      "z_threshold": 2.78,
+      "peak_z_in_prediction": 5.45,
+      "hottest_target": "sensor_52_avg",
+      "peak_criticality_in_prediction": 384,
+      "event_start": "2023-06-01T00:00:00",
+      "event_end": "2023-07-31T00:00:00",
+      "alarms": {
+        "12": {
+          "alarm_time": "2023-06-10T08:30:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 50.65
+        },
+        "24": {
+          "alarm_time": "2023-06-10T10:30:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 50.56
+        },
+        "48": {
+          "alarm_time": "2023-06-10T14:30:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 50.4
+        },
+        "72": {
+          "alarm_time": "2023-06-27T20:00:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 33.17
+        },
+        "144": {
+          "alarm_time": "2023-06-28T08:00:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 32.67
+        },
+        "288": {
+          "alarm_time": "2023-07-27T07:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 3.67
+        },
+        "432": null,
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "B",
+      "event_id": 82,
+      "asset": 5,
+      "label": "normal",
+      "description": null,
+      "rows": 54992,
+      "observable_prediction_rows": 2387,
+      "fit_rows": 37322,
+      "calibration_rows": 9331,
+      "targets_modelled": 25,
+      "targets_skipped": 0,
+      "z_threshold": 2.99,
+      "peak_z_in_prediction": 4.18,
+      "hottest_target": "sensor_47_avg",
+      "peak_criticality_in_prediction": 848,
+      "event_start": "2023-09-26T23:00:00",
+      "event_end": "2023-10-08T23:00:00",
+      "alarms": {
+        "12": {
+          "alarm_time": "2023-09-24T23:50:00",
+          "before_event_start": true,
+          "warning_days_before_event_end": 13.97
+        },
+        "24": {
+          "alarm_time": "2023-09-25T01:50:00",
+          "before_event_start": true,
+          "warning_days_before_event_end": 13.88
+        },
+        "48": {
+          "alarm_time": "2023-09-25T05:50:00",
+          "before_event_start": true,
+          "warning_days_before_event_end": 13.72
+        },
+        "72": {
+          "alarm_time": "2023-09-25T09:50:00",
+          "before_event_start": true,
+          "warning_days_before_event_end": 13.55
+        },
+        "144": {
+          "alarm_time": "2023-09-27T15:10:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 11.33
+        },
+        "288": {
+          "alarm_time": "2023-10-06T15:00:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 2.33
+        },
+        "432": {
+          "alarm_time": "2023-10-07T18:00:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 1.21
+        },
+        "576": {
+          "alarm_time": "2023-10-08T18:00:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 0.21
+        },
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "B",
+      "event_id": 83,
+      "asset": 2,
+      "label": "normal",
+      "description": null,
+      "rows": 66154,
+      "observable_prediction_rows": 12859,
+      "fit_rows": 36600,
+      "calibration_rows": 9150,
+      "targets_modelled": 25,
+      "targets_skipped": 0,
+      "z_threshold": 3.14,
+      "peak_z_in_prediction": 4.24,
+      "hottest_target": "sensor_33_avg",
+      "peak_criticality_in_prediction": 108,
+      "event_start": "2023-07-01T00:00:00",
+      "event_end": "2023-09-30T00:00:00",
+      "alarms": {
+        "12": {
+          "alarm_time": "2023-06-29T23:40:00",
+          "before_event_start": true,
+          "warning_days_before_event_end": 92.01
+        },
+        "24": {
+          "alarm_time": "2023-06-30T01:40:00",
+          "before_event_start": true,
+          "warning_days_before_event_end": 91.93
+        },
+        "48": {
+          "alarm_time": "2023-06-30T05:40:00",
+          "before_event_start": true,
+          "warning_days_before_event_end": 91.76
+        },
+        "72": {
+          "alarm_time": "2023-08-14T09:10:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 46.62
+        },
+        "144": null,
+        "288": null,
+        "432": null,
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "B",
+      "event_id": 86,
+      "asset": 12,
+      "label": "normal",
+      "description": null,
+      "rows": 55486,
+      "observable_prediction_rows": 2856,
+      "fit_rows": 39075,
+      "calibration_rows": 9769,
+      "targets_modelled": 25,
+      "targets_skipped": 0,
+      "z_threshold": 2.42,
+      "peak_z_in_prediction": 2.02,
+      "hottest_target": "sensor_52_avg",
+      "peak_criticality_in_prediction": 0,
+      "event_start": "2023-04-28T17:30:00",
+      "event_end": "2023-05-12T01:10:00",
+      "alarms": {
+        "12": null,
+        "24": null,
+        "48": null,
+        "72": null,
+        "144": null,
+        "288": null,
+        "432": null,
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "B",
+      "event_id": 87,
+      "asset": 7,
+      "label": "normal",
+      "description": null,
+      "rows": 55356,
+      "observable_prediction_rows": 2934,
+      "fit_rows": 36942,
+      "calibration_rows": 9236,
+      "targets_modelled": 25,
+      "targets_skipped": 0,
+      "z_threshold": 3.35,
+      "peak_z_in_prediction": 5.57,
+      "hottest_target": "sensor_51_avg",
+      "peak_criticality_in_prediction": 450,
+      "event_start": "2023-09-14T23:00:00",
+      "event_end": "2023-09-30T23:00:00",
+      "alarms": {
+        "12": {
+          "alarm_time": "2023-09-16T13:10:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 14.41
+        },
+        "24": {
+          "alarm_time": "2023-09-16T15:10:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 14.33
+        },
+        "48": {
+          "alarm_time": "2023-09-16T19:10:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 14.16
+        },
+        "72": {
+          "alarm_time": "2023-09-21T13:20:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 9.4
+        },
+        "144": {
+          "alarm_time": "2023-09-23T13:20:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 7.4
+        },
+        "288": {
+          "alarm_time": "2023-09-26T18:40:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 4.18
+        },
+        "432": {
+          "alarm_time": "2023-09-27T18:40:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 3.18
+        },
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    }
+  ]
+}

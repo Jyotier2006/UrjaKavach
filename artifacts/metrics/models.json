@@ -1,0 +1,79 @@
+{
+  "status": "m2_measured_on_care",
+  "source": "CARE To Compare v6 downloaded and evaluated for M2; solar and IR datasets still absent",
+  "care": {
+    "models": [
+      {
+        "id": "B0",
+        "name": "Static threshold",
+        "care": null,
+        "coverage": null,
+        "accuracy": null,
+        "reliability": null,
+        "earliness": null,
+        "events_detected": null,
+        "test_events": null,
+        "false_alarms": null,
+        "lead_time_hours": null,
+        "status": "Awaiting held-out evaluation"
+      },
+      {
+        "id": "M1",
+        "name": "Autoencoder",
+        "care": null,
+        "coverage": null,
+        "accuracy": null,
+        "reliability": null,
+        "earliness": null,
+        "events_detected": null,
+        "test_events": null,
+        "false_alarms": null,
+        "lead_time_hours": null,
+        "status": "Awaiting held-out evaluation"
+      },
+      {
+        "id": "M2",
+        "name": "LightGBM temperature NBM",
+        "care": null,
+        "coverage": null,
+        "accuracy": null,
+        "reliability": null,
+        "earliness": null,
+        "events_detected": null,
+        "test_events": null,
+        "false_alarms": null,
+        "lead_time_hours": null,
+        "status": "Measured on real CARE events (see above); benchmark quantities not computed"
+      },
+      {
+        "id": "M3",
+        "name": "Fusion",
+        "care": null,
+        "coverage": null,
+        "accuracy": null,
+        "reliability": null,
+        "earliness": null,
+        "events_detected": null,
+        "test_events": null,
+        "false_alarms": null,
+        "lead_time_hours": null,
+        "status": "Awaiting held-out evaluation"
+      }
+    ]
+  },
+  "ir": {
+    "macro_f1": null,
+    "status": "Trained classifier weights are not bundled"
+  },
+  "solar": {
+    "status": "Awaiting real telemetry and injection validation"
+  },
+  "synthetic_check": {
+    "model": "Ridge normal-behavior prototype",
+    "anomaly_alarm_step": 185,
+    "normal_alarm_step": null,
+    "threshold": 72,
+    "source": "scenarios.json",
+    "note": "Designed synthetic scenarios; not empirical benchmark evidence"
+  }
+}

@@ -1,0 +1,57 @@
+# Handoff state
+
+Updated 2026-09-12. The five issues recorded at handoff have been fixed and verified; this file now records
+what was done and what genuinely remains.
+
+## Previously known issues — all resolved
+
+1. **3D fleet rendering — fixed.** The cause was `distanceFactor` on the turbine label's drei `<Html>`. That
+   prop assumes a perspective camera, and the scene uses an `OrthographicCamera`, so it produced a corrupted
+   transform (one label measured roughly 30,000 x 20,000 px) that broke WebGL rendering for the whole canvas,
+   not merely the label. Solar blocks were unaffected because their labels never set the prop, which is what
+   isolated it. Removing it restores the full site twin.
+2. **Mobile planner overflow — fixed.** At the 980px breakpoint the grids used a bare `1fr`, which is
+   `minmax(auto,1fr)` and therefore cannot shrink below the Gantt's intrinsic width, so the page was pushed
+   sideways instead of the Gantt scrolling inside its own container. Now `minmax(0,1fr)`, with `min-width:0`
+   on `.stack`. Verified 0px horizontal overflow on all nine routes at 390x844.
+3. **Journey assertion mismatch — fixed.** Product wording aligned to the brief: "Signals most associated with
+   this deviation".
+4. **Offline end-to-end — verified, and a related bug fixed.** The export writes RSC segment payloads at
+   `<route>/__next.<segment>/__PAGE__.txt` while the router requests `<route>/__next.<segment>.__PAGE__.txt`.
+   A static host cannot resolve one to the other, so every prefetch returned 404 and client-side navigation
+   quietly degraded to full page loads. `scripts/build_offline.py` now mirrors each payload to the requested
+   name. The built site serves all nine routes with no 404s.
+5. **Accessibility and responsive review — completed.** No unnamed buttons or links, no missing image alt
+   text, no unlabelled form controls, one `h1` and a `main` landmark per route. The command palette takes
+   focus on open and releases it on Escape.
+
+## Verification completed
+
+- Playwright journey suite: 3 passed, including the full detect → investigate → plan → technician → evidence
+  path, the phone overflow check and offline reload/navigation.
+- Python suite: 30 passed.
+- Production build: all 11 routes exported; typecheck and lint clean.
+- Built output served and re-checked route by route with no console errors.
+- The e2e web server now uses the bundled `serve` dependency rather than `python3`, which is not on PATH on
+  Windows, and the port is overridable with `E2E_PORT`.
+
+## Missing capabilities/evidence
+
+- M1 (EnergyFaultDetector autoencoder), M3 and the M1/M2 fusion are untrained, and nothing is SHAP-explained.
+  M2 is the only real model.
+- The official CARE benchmark quantities (CARE score, coverage, accuracy, reliability, earliness) have not
+  been computed. The Performance page reports our own measured results and leaves that table empty.
+- Solar and infrared archives are still not downloaded. Solar analytics use generated series and infrared
+  upload performs image-quality screening only.
+- No trained infrared CNN, Grad-CAM, model card or Hugging Face publication.
+- SQLite demo record storage exists, not the normalized TimescaleDB schema and migrations from the brief.
+- MQTT and webhook integration code is unverified against external infrastructure. No Slack message was sent.
+- No production authentication, durable job queue or cross-device offline synchronization.
+- API Sentry hook exists; DSN and monitoring verification are absent. Web Sentry is not wired.
+- No Docker Compose runtime, CI run, production deployment, deck, backup video or full rehearsal.
+
+## Suggested completion order
+
+Train M1 and the fusion, since M2 alone detects 14 of 37 anomaly events and the remaining gains are unlikely
+to come from tuning it further. Then acquire the solar and infrared datasets so those screens stop running on
+generated series. Deployment remains the user's to perform.

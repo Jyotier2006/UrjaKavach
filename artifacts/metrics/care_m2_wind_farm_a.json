@@ -1,0 +1,690 @@
+{
+  "summary": {
+    "farm": "A",
+    "model": "M2 - LightGBM temperature normal-behavior models",
+    "data": "real CARE To Compare v6",
+    "caveat": "Own normal-behavior approach evaluated on real CARE labels; not a published CARE benchmark score.",
+    "targets_per_event": 24,
+    "baseline_flag_rate": 0.01,
+    "smoothing_window_rows": 72,
+    "threshold_selection": "z cut-off calibrated per event on held-out normal training rows; no event labels used",
+    "events_evaluated": 14,
+    "events_not_assessable": 8,
+    "not_assessable_reason": "turbine not in normal operation during the prediction window, so no early-detection signal exists to measure",
+    "events_not_assessable_anomaly": 8,
+    "events_errored": 0,
+    "anomaly_events": 4,
+    "normal_events": 10,
+    "criticality_sweep": {
+      "12": {
+        "detected": 1,
+        "detection_rate": 0.25,
+        "detected_before_event_start": 0,
+        "warning_days_before_event_end_median": 26.27,
+        "false_alarms": 7,
+        "false_alarm_rate": 0.7
+      },
+      "24": {
+        "detected": 0,
+        "detection_rate": 0.0,
+        "detected_before_event_start": 0,
+        "warning_days_before_event_end_median": null,
+        "false_alarms": 7,
+        "false_alarm_rate": 0.7
+      },
+      "48": {
+        "detected": 0,
+        "detection_rate": 0.0,
+        "detected_before_event_start": 0,
+        "warning_days_before_event_end_median": null,
+        "false_alarms": 6,
+        "false_alarm_rate": 0.6
+      },
+      "72": {
+        "detected": 0,
+        "detection_rate": 0.0,
+        "detected_before_event_start": 0,
+        "warning_days_before_event_end_median": null,
+        "false_alarms": 4,
+        "false_alarm_rate": 0.4
+      },
+      "144": {
+        "detected": 0,
+        "detection_rate": 0.0,
+        "detected_before_event_start": 0,
+        "warning_days_before_event_end_median": null,
+        "false_alarms": 1,
+        "false_alarm_rate": 0.1
+      },
+      "288": {
+        "detected": 0,
+        "detection_rate": 0.0,
+        "detected_before_event_start": 0,
+        "warning_days_before_event_end_median": null,
+        "false_alarms": 0,
+        "false_alarm_rate": 0.0
+      },
+      "432": {
+        "detected": 0,
+        "detection_rate": 0.0,
+        "detected_before_event_start": 0,
+        "warning_days_before_event_end_median": null,
+        "false_alarms": 0,
+        "false_alarm_rate": 0.0
+      },
+      "576": {
+        "detected": 0,
+        "detection_rate": 0.0,
+        "detected_before_event_start": 0,
+        "warning_days_before_event_end_median": null,
+        "false_alarms": 0,
+        "false_alarm_rate": 0.0
+      },
+      "864": {
+        "detected": 0,
+        "detection_rate": 0.0,
+        "detected_before_event_start": 0,
+        "warning_days_before_event_end_median": null,
+        "false_alarms": 0,
+        "false_alarm_rate": 0.0
+      },
+      "1152": {
+        "detected": 0,
+        "detection_rate": 0.0,
+        "detected_before_event_start": 0,
+        "warning_days_before_event_end_median": null,
+        "false_alarms": 0,
+        "false_alarm_rate": 0.0
+      }
+    },
+    "runtime_seconds": 282.8
+  },
+  "events": [
+    {
+      "farm": "A",
+      "event_id": 0,
+      "asset": 0,
+      "label": "anomaly",
+      "description": "Generator bearing failure",
+      "rows": 54986,
+      "observable_prediction_rows": 288,
+      "fit_rows": 37801,
+      "calibration_rows": 9451,
+      "targets_modelled": 24,
+      "targets_skipped": 0,
+      "z_threshold": 2.89,
+      "peak_z_in_prediction": 2.84,
+      "hottest_target": "sensor_38_avg",
+      "peak_criticality_in_prediction": 0,
+      "event_start": "2023-08-06T06:10:00",
+      "event_end": "2023-08-20T06:10:00",
+      "alarms": {
+        "12": null,
+        "24": null,
+        "48": null,
+        "72": null,
+        "144": null,
+        "288": null,
+        "432": null,
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "A",
+      "event_id": 3,
+      "asset": 10,
+      "label": "normal",
+      "description": null,
+      "rows": 55487,
+      "observable_prediction_rows": 3302,
+      "fit_rows": 33308,
+      "calibration_rows": 8327,
+      "targets_modelled": 24,
+      "targets_skipped": 0,
+      "z_threshold": 2.58,
+      "peak_z_in_prediction": 5.08,
+      "hottest_target": "sensor_38_avg",
+      "peak_criticality_in_prediction": 94,
+      "event_start": "2023-04-27T03:00:00",
+      "event_end": "2023-05-18T01:10:00",
+      "alarms": {
+        "12": {
+          "alarm_time": "2023-05-04T13:10:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 13.5
+        },
+        "24": {
+          "alarm_time": "2023-05-04T15:10:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 13.42
+        },
+        "48": {
+          "alarm_time": "2023-05-04T19:10:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 13.25
+        },
+        "72": {
+          "alarm_time": "2023-05-04T23:10:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 13.08
+        },
+        "144": null,
+        "288": null,
+        "432": null,
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "A",
+      "event_id": 10,
+      "label": "anomaly",
+      "not_assessable": "only 0 normal-operation rows in the prediction window"
+    },
+    {
+      "farm": "A",
+      "event_id": 13,
+      "asset": 21,
+      "label": "normal",
+      "description": null,
+      "rows": 54010,
+      "observable_prediction_rows": 3583,
+      "fit_rows": 32513,
+      "calibration_rows": 8129,
+      "targets_modelled": 24,
+      "targets_skipped": 0,
+      "z_threshold": 2.34,
+      "peak_z_in_prediction": 6.9,
+      "hottest_target": "sensor_13_avg",
+      "peak_criticality_in_prediction": 154,
+      "event_start": "2023-05-03T13:20:00",
+      "event_end": "2023-05-24T10:20:00",
+      "alarms": {
+        "12": {
+          "alarm_time": "2023-05-03T00:00:00",
+          "before_event_start": true,
+          "warning_days_before_event_end": 21.43
+        },
+        "24": {
+          "alarm_time": "2023-05-03T23:20:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 20.46
+        },
+        "48": {
+          "alarm_time": "2023-05-04T03:20:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 20.29
+        },
+        "72": {
+          "alarm_time": "2023-05-08T08:00:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 16.1
+        },
+        "144": {
+          "alarm_time": "2023-05-17T16:30:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 6.74
+        },
+        "288": null,
+        "432": null,
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "A",
+      "event_id": 14,
+      "asset": 13,
+      "label": "normal",
+      "description": null,
+      "rows": 54197,
+      "observable_prediction_rows": 1901,
+      "fit_rows": 39537,
+      "calibration_rows": 9885,
+      "targets_modelled": 24,
+      "targets_skipped": 0,
+      "z_threshold": 2.47,
+      "peak_z_in_prediction": 2.42,
+      "hottest_target": "sensor_13_avg",
+      "peak_criticality_in_prediction": 0,
+      "event_start": "2023-03-05T14:00:00",
+      "event_end": "2023-03-12T18:40:00",
+      "alarms": {
+        "12": null,
+        "24": null,
+        "48": null,
+        "72": null,
+        "144": null,
+        "288": null,
+        "432": null,
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "A",
+      "event_id": 17,
+      "asset": 10,
+      "label": "normal",
+      "description": null,
+      "rows": 55090,
+      "observable_prediction_rows": 2781,
+      "fit_rows": 36024,
+      "calibration_rows": 9007,
+      "targets_modelled": 23,
+      "targets_skipped": 1,
+      "z_threshold": 2.08,
+      "peak_z_in_prediction": 2.68,
+      "hottest_target": "sensor_41_avg",
+      "peak_criticality_in_prediction": 96,
+      "event_start": "2023-11-02T15:20:00",
+      "event_end": "2023-11-16T00:40:00",
+      "alarms": {
+        "12": {
+          "alarm_time": "2023-11-05T00:00:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 11.03
+        },
+        "24": {
+          "alarm_time": "2023-11-05T02:00:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 10.94
+        },
+        "48": {
+          "alarm_time": "2023-11-10T21:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 5.12
+        },
+        "72": {
+          "alarm_time": "2023-11-11T01:50:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 4.95
+        },
+        "144": null,
+        "288": null,
+        "432": null,
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "A",
+      "event_id": 22,
+      "label": "anomaly",
+      "not_assessable": "only 0 normal-operation rows in the prediction window"
+    },
+    {
+      "farm": "A",
+      "event_id": 24,
+      "asset": 0,
+      "label": "normal",
+      "description": null,
+      "rows": 55003,
+      "observable_prediction_rows": 2714,
+      "fit_rows": 36888,
+      "calibration_rows": 9222,
+      "targets_modelled": 24,
+      "targets_skipped": 0,
+      "z_threshold": 2.7,
+      "peak_z_in_prediction": 3.3,
+      "hottest_target": "sensor_38_avg",
+      "peak_criticality_in_prediction": 51,
+      "event_start": "2023-04-27T15:00:00",
+      "event_end": "2023-05-11T11:20:00",
+      "alarms": {
+        "12": {
+          "alarm_time": "2023-04-25T10:30:00",
+          "before_event_start": true,
+          "warning_days_before_event_end": 16.03
+        },
+        "24": {
+          "alarm_time": "2023-04-25T12:30:00",
+          "before_event_start": true,
+          "warning_days_before_event_end": 15.95
+        },
+        "48": {
+          "alarm_time": "2023-04-26T14:40:00",
+          "before_event_start": true,
+          "warning_days_before_event_end": 14.86
+        },
+        "72": null,
+        "144": null,
+        "288": null,
+        "432": null,
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "A",
+      "event_id": 25,
+      "asset": 11,
+      "label": "normal",
+      "description": null,
+      "rows": 54712,
+      "observable_prediction_rows": 2423,
+      "fit_rows": 39875,
+      "calibration_rows": 9969,
+      "targets_modelled": 24,
+      "targets_skipped": 0,
+      "z_threshold": 2.41,
+      "peak_z_in_prediction": 2.4,
+      "hottest_target": "sensor_19_avg",
+      "peak_criticality_in_prediction": 0,
+      "event_start": "2023-05-23T06:50:00",
+      "event_end": "2023-06-05T02:30:00",
+      "alarms": {
+        "12": null,
+        "24": null,
+        "48": null,
+        "72": null,
+        "144": null,
+        "288": null,
+        "432": null,
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "A",
+      "event_id": 26,
+      "label": "anomaly",
+      "not_assessable": "only 1 normal-operation rows in the prediction window"
+    },
+    {
+      "farm": "A",
+      "event_id": 38,
+      "asset": 13,
+      "label": "normal",
+      "description": null,
+      "rows": 54835,
+      "observable_prediction_rows": 2544,
+      "fit_rows": 37944,
+      "calibration_rows": 9486,
+      "targets_modelled": 24,
+      "targets_skipped": 0,
+      "z_threshold": 2.38,
+      "peak_z_in_prediction": 2.48,
+      "hottest_target": "sensor_13_avg",
+      "peak_criticality_in_prediction": 29,
+      "event_start": "2023-07-01T15:40:00",
+      "event_end": "2023-07-15T07:40:00",
+      "alarms": {
+        "12": {
+          "alarm_time": "2023-07-14T07:10:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 1.02
+        },
+        "24": {
+          "alarm_time": "2023-07-14T09:10:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 0.94
+        },
+        "48": null,
+        "72": null,
+        "144": null,
+        "288": null,
+        "432": null,
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "A",
+      "event_id": 40,
+      "asset": 10,
+      "label": "anomaly",
+      "description": "Generator bearing failure",
+      "rows": 56158,
+      "observable_prediction_rows": 2666,
+      "fit_rows": 34464,
+      "calibration_rows": 8617,
+      "targets_modelled": 24,
+      "targets_skipped": 0,
+      "z_threshold": 2.49,
+      "peak_z_in_prediction": 2.89,
+      "hottest_target": "sensor_38_avg",
+      "peak_criticality_in_prediction": 14,
+      "event_start": "2022-12-26T00:00:00",
+      "event_end": "2023-01-26T13:00:00",
+      "alarms": {
+        "12": {
+          "alarm_time": "2022-12-31T06:30:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 26.27
+        },
+        "24": null,
+        "48": null,
+        "72": null,
+        "144": null,
+        "288": null,
+        "432": null,
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "A",
+      "event_id": 42,
+      "asset": 10,
+      "label": "anomaly",
+      "description": "Hydraulic group",
+      "rows": 53886,
+      "observable_prediction_rows": 145,
+      "fit_rows": 36480,
+      "calibration_rows": 9120,
+      "targets_modelled": 23,
+      "targets_skipped": 1,
+      "z_threshold": 1.77,
+      "peak_z_in_prediction": 0.96,
+      "hottest_target": "sensor_9_avg",
+      "peak_criticality_in_prediction": 0,
+      "event_start": "2023-09-09T15:50:00",
+      "event_end": "2023-09-16T15:50:00",
+      "alarms": {
+        "12": null,
+        "24": null,
+        "48": null,
+        "72": null,
+        "144": null,
+        "288": null,
+        "432": null,
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "A",
+      "event_id": 45,
+      "label": "anomaly",
+      "not_assessable": "only 0 normal-operation rows in the prediction window"
+    },
+    {
+      "farm": "A",
+      "event_id": 51,
+      "label": "anomaly",
+      "not_assessable": "only 46 normal-operation rows in the prediction window"
+    },
+    {
+      "farm": "A",
+      "event_id": 68,
+      "label": "anomaly",
+      "not_assessable": "only 0 normal-operation rows in the prediction window"
+    },
+    {
+      "farm": "A",
+      "event_id": 69,
+      "asset": 11,
+      "label": "normal",
+      "description": null,
+      "rows": 54813,
+      "observable_prediction_rows": 2593,
+      "fit_rows": 39825,
+      "calibration_rows": 9957,
+      "targets_modelled": 23,
+      "targets_skipped": 1,
+      "z_threshold": 2.23,
+      "peak_z_in_prediction": 1.99,
+      "hottest_target": "sensor_19_avg",
+      "peak_criticality_in_prediction": 0,
+      "event_start": "2023-09-04T00:50:00",
+      "event_end": "2023-09-18T00:50:00",
+      "alarms": {
+        "12": null,
+        "24": null,
+        "48": null,
+        "72": null,
+        "144": null,
+        "288": null,
+        "432": null,
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "A",
+      "event_id": 71,
+      "asset": 0,
+      "label": "normal",
+      "description": null,
+      "rows": 54744,
+      "observable_prediction_rows": 2449,
+      "fit_rows": 35960,
+      "calibration_rows": 8990,
+      "targets_modelled": 24,
+      "targets_skipped": 0,
+      "z_threshold": 2.34,
+      "peak_z_in_prediction": 4.56,
+      "hottest_target": "sensor_41_avg",
+      "peak_criticality_in_prediction": 106,
+      "event_start": "2023-01-02T00:00:00",
+      "event_end": "2023-01-16T00:00:00",
+      "alarms": {
+        "12": {
+          "alarm_time": "2023-01-01T17:50:00",
+          "before_event_start": true,
+          "warning_days_before_event_end": 14.26
+        },
+        "24": {
+          "alarm_time": "2023-01-01T19:50:00",
+          "before_event_start": true,
+          "warning_days_before_event_end": 14.17
+        },
+        "48": {
+          "alarm_time": "2023-01-02T03:10:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 13.87
+        },
+        "72": {
+          "alarm_time": "2023-01-02T07:10:00",
+          "before_event_start": false,
+          "warning_days_before_event_end": 13.7
+        },
+        "144": null,
+        "288": null,
+        "432": null,
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "A",
+      "event_id": 72,
+      "asset": 21,
+      "label": "anomaly",
+      "description": "Gearbox failure",
+      "rows": 54082,
+      "observable_prediction_rows": 145,
+      "fit_rows": 37357,
+      "calibration_rows": 9340,
+      "targets_modelled": 24,
+      "targets_skipped": 0,
+      "z_threshold": 1.8,
+      "peak_z_in_prediction": 0.5,
+      "hottest_target": "sensor_17_avg",
+      "peak_criticality_in_prediction": 0,
+      "event_start": "2023-10-10T08:40:00",
+      "event_end": "2023-10-17T08:40:00",
+      "alarms": {
+        "12": null,
+        "24": null,
+        "48": null,
+        "72": null,
+        "144": null,
+        "288": null,
+        "432": null,
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    },
+    {
+      "farm": "A",
+      "event_id": 73,
+      "label": "anomaly",
+      "not_assessable": "only 0 normal-operation rows in the prediction window"
+    },
+    {
+      "farm": "A",
+      "event_id": 84,
+      "label": "anomaly",
+      "not_assessable": "only 0 normal-operation rows in the prediction window"
+    },
+    {
+      "farm": "A",
+      "event_id": 92,
+      "asset": 11,
+      "label": "normal",
+      "description": null,
+      "rows": 54067,
+      "observable_prediction_rows": 1774,
+      "fit_rows": 39878,
+      "calibration_rows": 9970,
+      "targets_modelled": 24,
+      "targets_skipped": 0,
+      "z_threshold": 2.18,
+      "peak_z_in_prediction": 4.02,
+      "hottest_target": "sensor_38_avg",
+      "peak_criticality_in_prediction": 52,
+      "event_start": "2023-04-05T02:30:00",
+      "event_end": "2023-04-14T10:00:00",
+      "alarms": {
+        "12": {
+          "alarm_time": "2023-04-04T20:10:00",
+          "before_event_start": true,
+          "warning_days_before_event_end": 9.58
+        },
+        "24": {
+          "alarm_time": "2023-04-04T22:10:00",
+          "before_event_start": true,
+          "warning_days_before_event_end": 9.49
+        },
+        "48": {
+          "alarm_time": "2023-04-05T02:10:00",
+          "before_event_start": true,
+          "warning_days_before_event_end": 9.33
+        },
+        "72": null,
+        "144": null,
+        "288": null,
+        "432": null,
+        "576": null,
+        "864": null,
+        "1152": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "urjakavach",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": ["apps/web"],
+  "scripts": {
+    "dev": "npm run dev --workspace=@urjakavach/web",
+    "build": "npm run build --workspace=@urjakavach/web",
+    "start": "npm run start --workspace=@urjakavach/web",
+    "typecheck": "npm run typecheck --workspace=@urjakavach/web",
+    "lint": "npm run lint --workspace=@urjakavach/web",
+    "test:e2e": "npm run test:e2e --workspace=@urjakavach/web"
+  },
+  "engines": {"node": ">=20.9"}
+}
