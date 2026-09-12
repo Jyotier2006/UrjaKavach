@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: urjakavach
+
+resources:
+  - namespace.yaml
+  - ../../base
+
+replicas:
+  - name: urjakavach-api
+    count: 3
+  - name: urjakavach-web
+    count: 3
+
+# Pin to an immutable tag in a real registry rather than :latest, so a rollout is reproducible.
+images:
+  - name: urjakavach-api
+    newName: ghcr.io/jyotier2006/urjakavach-api
+    newTag: v0.1.0
+  - name: urjakavach-web
+    newName: ghcr.io/jyotier2006/urjakavach-web
+    newTag: v0.1.0

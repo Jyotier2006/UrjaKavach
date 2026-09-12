@@ -1,0 +1,51 @@
+# Local full stack: web + API + PostgreSQL.
+#   docker compose up --build      then open http://localhost:8080
+#
+# The web image bakes NEXT_PUBLIC_API_URL at build time because the frontend is a static export, so the API
+# address below is a build argument rather than a runtime environment variable.
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: urjakavach
+      POSTGRES_PASSWORD: urjakavach
+      POSTGRES_DB: urjakavach
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U urjakavach -d urjakavach"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: infra/docker/api.Dockerfile
+    environment:
+      DATABASE_URL: postgresql+psycopg2://urjakavach:urjakavach@db:5432/urjakavach
+      CORS_ORIGINS: http://localhost:8080
+      ALERT_ESCALATION_SECONDS: "900"
+      # SLACK_WEBHOOK_URL and SENTRY_DSN are intentionally unset; the API runs without them.
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: infra/docker/web.Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8000
+    ports:
+      - "8080:8080"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  db-data:

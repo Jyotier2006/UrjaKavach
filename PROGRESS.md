@@ -23,6 +23,12 @@ Complete website with all product screens and working demo interactions, Python 
 - All five handoff issues fixed and verified: 3D rendering, mobile overflow, journey wording, offline/RSC prefetch 404s, accessibility. See docs/HANDOFF.md.
 - Verification: 30 Python tests, 3 Playwright journey tests, production build, typecheck and lint all pass.
 
+## Infrastructure (2026-09-12)
+- Container images for the API and web app, both building and running. Compose brings up web, API and PostgreSQL with all three healthy and the API actually on Postgres rather than the SQLite fallback.
+- Kubernetes base manifests with dev and prod overlays: probes, resource bounds, non-root and read-only-root security contexts, HPA, PodDisruptionBudget and ingress. Both overlays render and pass `kubectl apply --dry-run=client`. Never applied to a live cluster.
+- CI workflow covering Python tests, typecheck/lint/build, the browser journey, both image builds and manifest validation.
+- Fixed along the way: `scripts/build_offline.py` failed on a fresh clone because `artifacts/metrics/` did not exist, and `/health` hardcoded `care_evaluated: false`, which had gone stale.
+
 ## Outstanding evidence
 - M1 (EnergyFaultDetector autoencoder), M3 and the M1/M2 fusion are still untrained; SHAP explanations are still absent. Only M2 exists as a real model.
 - The fleet, solar and planner screens still run on the synthetic demo bundle and remain labelled Simulated. The measured CARE results appear only on the Performance page, and are kept visibly separate from that simulated fleet.

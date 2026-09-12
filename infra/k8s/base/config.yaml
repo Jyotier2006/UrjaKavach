@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: urjakavach-config
+data:
+  # Comma-separated origins allowed to call the API from a browser.
+  CORS_ORIGINS: "http://localhost:8080"
+  # Seconds an unacknowledged alert waits before it escalates. These timers live in process and do not
+  # survive a restart, which is why the API is not a durable job queue.
+  ALERT_ESCALATION_SECONDS: "900"
+---
+# Template only. Real values never belong in git: create the secret out of band, for example
+#   kubectl create secret generic urjakavach-secrets \
+#     --from-literal=DATABASE_URL='postgresql+psycopg2://user:pass@host:5432/urjakavach'
+# or point a sealed-secrets / external-secrets controller at this name.
+apiVersion: v1
+kind: Secret
+metadata:
+  name: urjakavach-secrets
+type: Opaque
+stringData:
+  DATABASE_URL: "postgresql+psycopg2://urjakavach:CHANGE_ME@urjakavach-db:5432/urjakavach"

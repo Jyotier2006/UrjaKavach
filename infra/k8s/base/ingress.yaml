@@ -1,0 +1,29 @@
+# Routes the site at / and the Python API under /api on one host.
+# The API is mounted at the root of its own service, so the /api prefix is stripped before it is forwarded.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: urjakavach
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/proxy-body-size: "12m" # infrared uploads
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: urjakavach.local
+      http:
+        paths:
+          - path: /api(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: urjakavach-api
+                port:
+                  name: http
+          - path: /()(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: urjakavach-web
+                port:
+                  name: http

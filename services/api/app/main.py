@@ -169,7 +169,10 @@ def health():
     with db.engine.connect() as connection:
         from sqlalchemy import text
         connection.execute(text('SELECT 1'))
-    return {'status': 'ok', 'version': '1.0.0', 'data_mode': 'simulated', 'database': db.engine.dialect.name, 'trained_ir_model': False, 'care_evaluated': False}
+    # Reported from the artifact that is actually present, so the flag cannot drift away from the truth.
+    # data_mode stays 'simulated': the operational series this API serves are generated, and the CARE
+    # evaluation is a separate measurement on real turbines rather than a live feed.
+    return {'status': 'ok', 'version': '1.0.0', 'data_mode': 'simulated', 'database': db.engine.dialect.name, 'trained_ir_model': False, 'care_evaluated': (ARTIFACTS / 'care-evaluation.json').exists()}
 
 
 @app.get('/sites')

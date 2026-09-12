@@ -39,6 +39,8 @@ if(request.mode==='navigate'){event.respondWith((async()=>{try{return await fetc
 event.respondWith((async()=>{const cache=await caches.open(CACHE);const cached=await cache.match(request);if(cached)return cached;const response=await fetch(request);if(response.ok&&(url.pathname.startsWith('/_next/')||url.pathname.startsWith('/demo/')))await cache.put(request,response.clone());return response;})());});
 '''.replace('REVISION', revision).replace('URLS', json.dumps(sorted(set(urls + routes))))
 (out / 'sw.js').write_text(script)
-(root / 'artifacts/metrics/offline-build.json').write_text(json.dumps({'cache_version': revision, 'precached_urls': len(set(urls + routes)), 'public_bytes': sum(p.stat().st_size for p in files)}, indent=2))
+report = root / 'artifacts/metrics/offline-build.json'
+report.parent.mkdir(parents=True, exist_ok=True)  # absent on a fresh clone and in a container build context
+report.write_text(json.dumps({'cache_version': revision, 'precached_urls': len(set(urls + routes)), 'public_bytes': sum(p.stat().st_size for p in files)}, indent=2))
 print(f'Offline cache built: {len(set(urls + routes))} URLs, revision {revision}, {mirrored} segment prefetches mirrored')
 

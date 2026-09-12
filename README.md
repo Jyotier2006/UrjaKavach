@@ -10,6 +10,57 @@ Implemented screens: fleet overview, investigation and comparison, maintenance p
 
 Implemented Python services: static-artifact API, SQLite/PostgreSQL-compatible demo persistence, loss estimates with Monte Carlo bands, OR-Tools scheduling and baselines, work-order lifecycle, image-quality screening, replay/WebSocket alerts and optional Slack webhook delivery. The MQTT publisher/subscriber source is included but has not been exercised against a broker.
 
+## What is in here
+
+```
+urjakavach/
+├── apps/web/            Next.js static export — 9 operator screens, 3D site twin, offline service worker
+│   ├── src/app/           fleet · investigate · maintenance · solar · tech · performance · manager · about
+│   ├── src/components/    farm scene, charts, nacelle cutaway, replay, loss explorer
+│   └── tests/             Playwright journey, phone layout and offline suites
+├── services/            Python domain services
+│   ├── api/               FastAPI: assets, scenarios, alerts, loss, scheduling, work orders, IR upload
+│   ├── ml/                CARE loader, temperature normal-behavior models, criticality counter
+│   ├── optimizer/         OR-Tools CP-SAT repair scheduler and comparison baselines
+│   ├── simulator/         MQTT replay publisher and ingestion consumer
+│   └── alerts/            escalation and webhook delivery
+├── infra/               Containers and Kubernetes
+│   ├── docker/            API and web images, nginx config
+│   └── k8s/               base manifests plus dev and prod overlays
+├── scripts/             dataset download, demo generation, CARE training, offline build, OpenAPI export
+├── artifacts/           precomputed demo bundle, measured metrics, OpenAPI contract
+├── docs/                design, decisions, dataset provenance, traceability, handoff state
+├── tests/               Python domain, API and model tests
+└── .github/workflows/   CI: Python, typecheck/lint/build, browser journey, images, manifests
+```
+
+## Architecture
+
+```
+          browser ── nginx (static export, service worker)
+                            │
+                            │  optional; the app works fully offline without it
+                            ▼
+                    FastAPI ── PostgreSQL
+                       │
+        ┌──────────────┼──────────────┐
+        ▼              ▼              ▼
+    OR-Tools      Monte Carlo    normal-behavior
+     CP-SAT          loss         models (M2)
+    scheduler        bands       trained on CARE
+```
+
+The frontend ships a precomputed demo bundle and runs with no backend at all. The API adds live optimization,
+durable work orders, image screening and the replay/alert path.
+
+## Run it
+
+```bash
+docker compose up --build     # web :8080 · API :8000 · PostgreSQL
+```
+
+Or without containers, see **Run the website** below. `make help` lists every task.
+
 ## Run the website
 
 Use Node.js 24 and Python 3.12. Run commands from the extracted `urjakavach` directory:

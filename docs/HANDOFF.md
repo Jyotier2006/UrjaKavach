@@ -34,6 +34,9 @@ what was done and what genuinely remains.
 - Built output served and re-checked route by route with no console errors.
 - The e2e web server now uses the bundled `serve` dependency rather than `python3`, which is not on PATH on
   Windows, and the port is overridable with `E2E_PORT`.
+- Container images build and the full Compose stack runs: web, API and PostgreSQL all report healthy, the API
+  reports `"database":"postgresql"`, and every route is served through nginx. Both Kubernetes overlays render
+  and pass client-side validation. See `infra/README.md` for what is and is not verified.
 
 ## Missing capabilities/evidence
 
@@ -48,7 +51,8 @@ what was done and what genuinely remains.
 - MQTT and webhook integration code is unverified against external infrastructure. No Slack message was sent.
 - No production authentication, durable job queue or cross-device offline synchronization.
 - API Sentry hook exists; DSN and monitoring verification are absent. Web Sentry is not wired.
-- No Docker Compose runtime, CI run, production deployment, deck, backup video or full rehearsal.
+- Kubernetes manifests render and validate but have never been applied to a live cluster; no cluster was available.
+- No production deployment, deck, backup video or full rehearsal.
 
 ## Suggested completion order
 
