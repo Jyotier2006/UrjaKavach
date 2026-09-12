@@ -94,3 +94,14 @@ published from-scratch results on this benchmark and are reported as measured, n
 The heatmap the technician sees is now genuine Grad-CAM over the final convolutional block. Without weights, or
 with torch absent, the endpoint degrades to the original contrast check and says so in every field of the
 response. A prediction remains a prompt to look, never a diagnosis.
+
+## D017 — WebSocket support is a dependency, not a code path
+The alert stream is advertised under R7 and the `/ws/{channel}` route was correct, but uvicorn ships no
+WebSocket protocol implementation of its own. With neither `websockets` nor `wsproto` installed it answered
+every handshake with 404, so the live alert feed silently did nothing in the venv and in the container while
+the in-process test client kept passing, because Starlette's TestClient implements WebSockets itself and never
+touches uvicorn's protocol layer. `websockets` is now pinned in requirements.lock.
+
+The browser's CORS default was widened to include port 3001. Next.js moves to the next free port when 3000 is
+taken, and the resulting failure is a CORS error in the console rather than anything the UI can explain, which
+reads to a user as "the button is broken". Deployments should still set CORS_ORIGINS explicitly.

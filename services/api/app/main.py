@@ -64,7 +64,9 @@ if os.getenv('SENTRY_DSN'):
     sentry_sdk.init(dsn=os.environ['SENTRY_DSN'], traces_sample_rate=.1, send_default_pii=False)
 
 app = FastAPI(title='UrjaKavach API', version='1.0.0', description='Optional demo API. Simulated artifacts, assumption-driven estimates and local demo roles. No production authentication.', lifespan=lifespan)
-app.add_middleware(CORSMiddleware, allow_origins=os.getenv('CORS_ORIGINS', 'http://localhost:3000,http://127.0.0.1:3000').split(','), allow_methods=['GET', 'POST', 'PUT', 'PATCH'], allow_headers=['Content-Type'], allow_credentials=False)
+# 3001 is included because Next.js moves to the next free port when 3000 is taken, which silently breaks the
+# browser's call to this API with a CORS error rather than an obvious failure. Set CORS_ORIGINS in production.
+app.add_middleware(CORSMiddleware, allow_origins=os.getenv('CORS_ORIGINS', 'http://localhost:3000,http://127.0.0.1:3000,http://localhost:3001,http://127.0.0.1:3001').split(','), allow_methods=['GET', 'POST', 'PUT', 'PATCH'], allow_headers=['Content-Type'], allow_credentials=False)
 
 
 class StrictModel(BaseModel):

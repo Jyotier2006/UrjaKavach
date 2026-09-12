@@ -51,6 +51,7 @@ what was done and what genuinely remains.
 - No model card or Hugging Face publication for the infrared classifier.
 - SQLite demo record storage exists, not the normalized TimescaleDB schema and migrations from the brief.
 - MQTT and webhook integration code is unverified against external infrastructure. No Slack message was sent.
+- WebSocket alerts now connect (D017); the escalation path itself is still unverified against a broker.
 - No production authentication, durable job queue or cross-device offline synchronization.
 - API Sentry hook exists; DSN and monitoring verification are absent. Web Sentry is not wired.
 - Kubernetes manifests render and validate but have never been applied to a live cluster; no cluster was available.
