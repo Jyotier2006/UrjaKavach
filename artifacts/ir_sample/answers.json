@@ -1,0 +1,87 @@
+{
+  "source": "Raptor Maps Infrared Solar Modules (MIT)",
+  "split": "held-out test split, stratified 70/15/15, split seed 0; sampled with seed 42",
+  "note": "Filenames are deliberately anonymous. Upload each one, write down what the model says, then compare here.",
+  "answers": [
+    {
+      "file": "sample-01.jpg",
+      "true_class": "No-Anomaly"
+    },
+    {
+      "file": "sample-02.jpg",
+      "true_class": "No-Anomaly"
+    },
+    {
+      "file": "sample-03.jpg",
+      "true_class": "Cell"
+    },
+    {
+      "file": "sample-04.jpg",
+      "true_class": "Offline-Module"
+    },
+    {
+      "file": "sample-05.jpg",
+      "true_class": "No-Anomaly"
+    },
+    {
+      "file": "sample-06.jpg",
+      "true_class": "Soiling"
+    },
+    {
+      "file": "sample-07.jpg",
+      "true_class": "Cell-Multi"
+    },
+    {
+      "file": "sample-08.jpg",
+      "true_class": "No-Anomaly"
+    },
+    {
+      "file": "sample-09.jpg",
+      "true_class": "Cell"
+    },
+    {
+      "file": "sample-10.jpg",
+      "true_class": "Cracking"
+    },
+    {
+      "file": "sample-11.jpg",
+      "true_class": "Cell"
+    },
+    {
+      "file": "sample-12.jpg",
+      "true_class": "No-Anomaly"
+    },
+    {
+      "file": "sample-13.jpg",
+      "true_class": "Cell"
+    },
+    {
+      "file": "sample-14.jpg",
+      "true_class": "Diode"
+    },
+    {
+      "file": "sample-15.jpg",
+      "true_class": "Vegetation"
+    },
+    {
+      "file": "sample-16.jpg",
+      "true_class": "No-Anomaly"
+    },
+    {
+      "file": "sample-17.jpg",
+      "true_class": "Cell"
+    },
+    {
+      "file": "sample-18.jpg",
+      "true_class": "Cracking"
+    },
+    {
+      "file": "sample-19.jpg",
+      "true_class": "No-Anomaly"
+    },
+    {
+      "file": "sample-20.jpg",
+      "true_class": "Cell"
+    }
+  ]
+}
